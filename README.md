@@ -54,3 +54,14 @@ An easyest way to manage database is to go throught [PgAdmin4](https://www.pgadm
 | ctr D| quit SQL |
 | \l| display table |
 | \d tablename | table description |
+
+### Django
+
+Django is an open source framework write in python that allow to create complexes website easily.
+
+1. shell access & database communication
+```
+python manage.py shell
+from database.models import Ticket
+
+```
