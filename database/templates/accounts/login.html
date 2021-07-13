@@ -1,0 +1,19 @@
+<html>
+  <div class="d-flex justity-content-center h-100">
+    <div class="d-flex justity-content-center">
+      <h3>LOGIN ACCOUNT</h3>
+    </div>
+
+    <form method="POST" action="">
+      {% csrf_token %}
+      <div>{{form.username.label}} {{form.username}}</div>
+      <div>{{form.password1.label}} {{form.password1}}</div>
+      <input type="submit" value="Login" name="Create user" />
+    </form>
+    
+    {% for message in messages %}
+        <p id="messages">{{message}}</p>
+    {% endfor %}
+
+    <div>Don't have an account? <a href="{% url 'register'%}">Sign Up</a></div>
+</html>

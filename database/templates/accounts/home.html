@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<style>
+  #account {
+    font-size: 18px;
+    color: green;
+    margin-right: 20px;
+  }
+</style>
+<html>
+  <head>
+    <title>LITReview</title>
+  </head>
+
+  <body>
+    <nav>
+      <h1>Welcome on LITReview website</h1>
+      <p>Here you can :</p>
+      <div class="collapse navbar-collapse" id="navbar">
+        <ul class="navbar-nav">
+          <li><a> products </a></li>
+          <li><a> add comments </a></li>
+        </ul>
+      </div>
+      <span id="account"><a> Hello {{request.user}} </a></span>
+      <span><a id="account" href="{% url 'logout' %}"> Logout </a></span>
+    </nav>
+  </body>
+</html>

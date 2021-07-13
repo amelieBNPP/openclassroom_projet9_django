@@ -1,0 +1,20 @@
+<html>
+  <div class="d-flex justity-content-center h-100">
+    <div class="d-flex justity-content-center">
+      <h3>REGISTER ACCOUNT</h3>
+    </div>
+
+    <form method="POST" action="">
+      {% csrf_token %}
+      <div>{{form.username.label}} {{form.username}}</div>
+      <div>{{form.email.label}} {{form.email}}</div>
+      <div>{{form.password1.label}} {{form.password1}}</div>
+      <div>{{form.password2.label}} {{form.password2}}</div>
+      <input type="submit" name="Create user" />
+    </form>
+
+    {{form.errors}}
+    
+    <div>Already have an account? <a href="{% url 'login'%}">Sign Up</a>
+  </div>
+</html>
