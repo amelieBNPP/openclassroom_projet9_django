@@ -1,28 +1,40 @@
 <!DOCTYPE html>
-<style>
-  #account {
-    font-size: 18px;
-    color: green;
-    margin-right: 20px;
-  }
-</style>
-<html>
+
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../static/css/style.css" />
     <title>LITReview</title>
   </head>
 
   <body>
-    <nav>
+    <header>
+      <div class="head">
+        <img src="../../static/img/Logo.png" alt="Logo Image" id="Logo" />
+      </div>
       <h1>Welcome on LITReview website</h1>
-      <p>Here you can :</p>
-      <div class="collapse navbar-collapse" id="navbar">
+      <div></div>
+    </header>
+    <section class="main-container">
+      <div class="sub-container">
         <ul class="navbar-nav">
-          <li><a href="{% url 'get' %}"> get comments </a></li>
-          <li><a href="{% url 'post' %}"> post comments </a></li>
+          <p id="user">Hello {{request.user}}</p>
+          <li><a href="{% url 'home' %}"> Home </a></li>
+          <li><a href="{% url 'get' %}"> Get comments </a></li>
+          <li><a href="{% url 'post' %}"> Post comments </a></li>
+          <li><a href="{% url 'login' %}"> Logout </a></li>
         </ul>
       </div>
-      <span id="account"><a> Hello {{request.user}} </a></span>
-      <span><a id="account" href="{% url 'login' %}"> Logout </a></span>
-    </nav>
+      <div class="sub-container">
+        <h2>Introduction</h2>
+        <p>
+          Hello, this website is usefull if you want to learn more about book.
+          You can also help the communauty, sharing you felling about book you
+          read.
+        </p>
+      </div>
+    </section>
   </body>
 </html>
