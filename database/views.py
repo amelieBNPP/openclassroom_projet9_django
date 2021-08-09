@@ -50,3 +50,15 @@ def loginPage(request):
 def logoutUser(request):
     logout(request)
     return redirect('login')
+
+
+@login_required(login_url='login')
+def getComment(request):
+    template = loader.get_template('products/get.html')
+    return HttpResponse(template.render(request=request))
+
+
+@login_required(login_url='login')
+def postComment(request):
+    template = loader.get_template('products/post.html')
+    return HttpResponse(template.render(request=request))

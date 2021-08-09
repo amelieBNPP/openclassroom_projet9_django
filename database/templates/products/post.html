@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LITReview</title>
+  </head>
+
+  <body>
+    <nav>
+      <h1>Post comment on LITReview website</h1>
+      <p>Create ticket to give your feeling book :</p>
+      <div class="collapse navbar-collapse" id="navbar">
+        TICKET A METTRE ICI
+      </div>
+      <span id="account"><a> Hello {{request.user}} </a></span>
+      <span><a id="account" href="{% url 'login' %}"> Logout </a></span>
+      <span><a id="account" href="{% url 'home' %}"> Home </a></span>
+    </nav>
+  </body>
+</html>

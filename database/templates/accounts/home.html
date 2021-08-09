@@ -17,12 +17,12 @@
       <p>Here you can :</p>
       <div class="collapse navbar-collapse" id="navbar">
         <ul class="navbar-nav">
-          <li><a> products </a></li>
-          <li><a> add comments </a></li>
+          <li><a href="{% url 'get' %}"> get comments </a></li>
+          <li><a href="{% url 'post' %}"> post comments </a></li>
         </ul>
       </div>
       <span id="account"><a> Hello {{request.user}} </a></span>
-      <span><a id="account" href="{% url 'logout' %}"> Logout </a></span>
+      <span><a id="account" href="{% url 'login' %}"> Logout </a></span>
     </nav>
   </body>
 </html>

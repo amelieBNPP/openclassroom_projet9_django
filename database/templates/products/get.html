@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LITReview</title>
+  </head>
+
+  <body>
+    <nav>
+      <h1>Get comment on LITReview website</h1>
+      <p>Create ticket to require comment on book :</p>
+      <div class="collapse navbar-collapse" id="navbar">
+        <form method="POST" action="">
+          {% csrf_token %}
+          <input type="text" name="title" />
+          <input type="text" name="description" />
+          <input type="text" name="image" />
+          <div>Title:</div>
+          <div>{{form.title.label}} {{form.title}}</div>
+          <div>Description:</div>
+          <div>{{form.description.label}} {{form.description}}</div>
+          <div>Image:</div>
+          <div>{{form.Image.label}} {{form.Image}}</div>
+          <input type="submit" value="post" name="Create ticket" />
+        </form>
+      </div>
+      <span id="account"><a> Hello {{request.user}} </a></span>
+      <span><a id="account" href="{% url 'login' %}"> Logout </a></span>
+      <span><a id="account" href="{% url 'home' %}"> Home </a></span>
+    </nav>
+  </body>
+</html>
