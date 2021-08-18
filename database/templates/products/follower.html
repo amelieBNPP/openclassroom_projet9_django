@@ -5,7 +5,10 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <link rel="stylesheet" href="../../static/css/style.css" />
+    
     <title>LITReview</title>
   </head>
 
@@ -29,22 +32,15 @@
         </ul>
       </div>
       <div class="sub-container">
-        <h2>Introduction</h2>
-        <p>
-          <span>Hello,</span>
-          <span>
-            This website is usefull if you want to learn more about book.
-          </span>
-          <span>
-            You can also help the communauty, sharing your felling about book
-            you read.
-          </span>
-        </p>
-        <img
-          src="../../static/img/Bibliotheque.png"
-          alt="Bibliotheque Image"
-          id="Bibliotheque"
-        />
+        <h2>Follow others users on LitReview</h2>
+        Find new followers : </br>
+
+        User I follow : </br>
+        {{ all_followers.as_p }}
+
+        User who follow me : </br>
+        {{ all_followed.followed_user.as_p }}
+        
       </div>
     </section>
   </body>

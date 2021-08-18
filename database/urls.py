@@ -1,6 +1,8 @@
 """urls configuration"""
 
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 
 from . import views
 
@@ -10,4 +12,7 @@ urlpatterns = [
     path('login/', views.loginPage, name='login'),
     path('get/', views.getComment, name='get'),
     path('post/', views.postComment, name='post'),
+    path('follower/', views.following, name='follower'),
+    path('follower/', views.followedBy, name='follower'),
+
 ]

@@ -1,0 +1,97 @@
+/* CSS VARIABLES */
+
+/* GLOBAL */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  background-color: rgba(235, 240, 245, 0.589);
+  height: 100%;
+  font-family: "Bookman Old Style", serif, Arial, Helvetica, sans-serif;
+  padding: 20px;
+}
+
+/* HEADER */
+header {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  align-items: center;
+  padding: 15px;
+  font-size: 15px;
+  background: rgba(107, 109, 201, 0.767);
+  color: rgba(226, 226, 238, 0.767);
+}
+
+#Logo {
+  height: 75px; /*reduce the pic of the logo*/
+}
+
+#Bibliotheque {
+  align-items: center;
+}
+
+p {
+  white-space: pre;
+}
+
+/* CONTAINER */
+
+.main-container {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: row;
+}
+
+.loggin-container {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sub-container {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* NAV BAR */
+#user {
+  font-style: italic;
+  text-align: center;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  background-color: #f1f1f1;
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scrolling if the sidenav has too much content */
+}
+
+li a {
+  display: block;
+  color: #000;
+  padding: 8px 16px;
+  text-decoration: none;
+  border-bottom: 1px solid #555;
+}
+
+/* Change the link color on hover */
+li a:hover {
+  background-color: #555;
+  color: white;
+}
+
+/* FORM */
+/* #post-form {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+} */
