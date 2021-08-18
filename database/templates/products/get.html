@@ -24,27 +24,23 @@
           <li><a href="{% url 'home' %}"> Home </a></li>
           <li><a href="{% url 'get' %}"> Get comments </a></li>
           <li><a href="{% url 'post' %}"> Post comments </a></li>
+          <li><a href="{% url 'follower' %}"> Followers </a></li>
           <li><a href="{% url 'login' %}"> Logout </a></li>
         </ul>
       </div>
       <div class="sub-container">
         <h2>Get comment on LITReview website</h2>
-        <p>Create ticket to require comment on book :</p>
-        <div class="get-form">
-          <form method="POST" action="">
-            {% csrf_token %}
-            <input type="text" name="title" />
-            <input type="text" name="description" />
-            <input type="text" name="image" />
-            <div>Title:</div>
-            <div>{{form.title.label}} {{form.title}}</div>
-            <div>Description:</div>
-            <div>{{form.description.label}} {{form.description}}</div>
-            <div>Image:</div>
-            <div>{{form.Image.label}} {{form.Image}}</div>
-            <input type="submit" value="post" name="Create ticket" />
-          </form>
-        </div>
+        <p>Find ticket to require comment on book :</p>
+        {% for ticket in all_tickets %}
+        <strong>{{ ticket }}</strong>
+        <ul>
+          <li>Description : {{ ticket.description }}</li>
+          <li>Image : <img src="{{ ticket.image}}" alt="{{ ticket }}" /></li>
+          <li>Post by : {{ ticket.user }}</li>
+          <li>Created on : {{ ticket.time_created }}</li>
+        </ul>
+        <br />
+        {% endfor %}
       </div>
     </section>
   </body>
