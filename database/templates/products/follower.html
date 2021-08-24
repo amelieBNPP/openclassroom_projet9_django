@@ -34,13 +34,51 @@
       <div class="sub-container">
         <h2>Follow others users on LitReview</h2>
         Find new followers : </br>
+        <div class="follower">
+          <select id="user-selecter">
+            <option value="users" selected>users</option>
+            {% for user in all_users %}
+              <option value={{ user.username }}>{{ user.username }}</option>
+            {% endfor %}
+          </select>
+          <form action="follower" methode="POST">
+            {% csrf_token %}
+            <button type="submit" class="user-submited">
+              Follow
+            </button>
+          </form>
+        </div>
 
-        User I follow : </br>
-        {{ all_followers.as_p }}
-
-        User who follow me : </br>
-        {{ all_followed.followed_user.as_p }}
-        
+        </br>User I follow :
+        <div class="followig">
+          </br>
+          <table>
+            <tbody>
+              {% if all_followers %}
+                {% for follower in all_followers %}
+                  <tr>
+                    <td>{{ follower.id }}</td>
+                    <td><button type="submit" class="user-unfollowed" name="delete"></td>
+                  </tr>
+                {% endfor %}
+              {% else %}
+                <tr>You do not follow any user</tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+        </br>User who follow me : </br>
+          <div class="followd">
+            <ul id="flw-list">
+              {% if all_followed %}
+                {% for followed in all_followed %}
+                  <li>{{ followed }}</li>
+                {% endfor %}
+              {% else %}
+                <li>No user follow you</li>
+              {% endif%}
+            </ul>
+          </div>
       </div>
     </section>
   </body>

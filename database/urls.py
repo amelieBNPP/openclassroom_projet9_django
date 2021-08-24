@@ -12,7 +12,5 @@ urlpatterns = [
     path('login/', views.loginPage, name='login'),
     path('get/', views.getComment, name='get'),
     path('post/', views.postComment, name='post'),
-    path('follower/', views.following, name='follower'),
-    path('follower/', views.followedBy, name='follower'),
-
+    path('follower/', views.follows_list, name='follower'),
 ]

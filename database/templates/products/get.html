@@ -33,9 +33,12 @@
         <p>Find ticket to require comment on book :</p>
         {% for ticket in all_tickets %}
         <strong>{{ ticket }}</strong>
-        <ul>
+        <ul id="tkt-list">
           <li>Description : {{ ticket.description }}</li>
-          <li>Image : <img src="{{ ticket.image}}" alt="{{ ticket }}" /></li>
+          <li>
+            Image :
+            <img src="../../static/{{ticket.image}}" alt="{{ ticket }}" />
+          </li>
           <li>Post by : {{ ticket.user }}</li>
           <li>Created on : {{ ticket.time_created }}</li>
         </ul>

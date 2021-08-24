@@ -15,9 +15,3 @@ class CreateTicketForm(ModelForm):
     class Meta:
         model = Ticket
         fields = ['title', 'description', 'image']
-
-
-# class CreateUserForm(ModelForm):
-#     class Meta:
-#         model = User
-#         fields = ['username']

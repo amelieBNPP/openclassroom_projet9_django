@@ -1,5 +1,6 @@
 from django import template
 from django.contrib import auth
+from django.db.models import fields
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
@@ -10,7 +11,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .models import Ticket, UserFollows
-
+from django.contrib.auth.models import User
 # Create your views here.
 
 
@@ -77,22 +78,36 @@ def postComment(request):
 
 
 @login_required(login_url='login')
-def following(request):
-    all_followers = UserFollows.objects.all()
-    return render(request, 'products/follower.html', {'all_followers': all_followers})
-
-
-@login_required(login_url='login')
-def followedBy(request):
-    all_followed = UserFollows.objects.all()
-    return render(request, 'products/follower.html', {'all_followed': all_followed})
-
-
-# @login_required(login_url='login')
-# def addFollowing(request):
-#     form = UserFollows()
-#     if request.method == "POST":
-#         form = UserFollows(request.POST)
-#         form.instance.username = ['user1', 'user2', 'user3']
-#     all_followed = UserFollows.objects.filter(followed_user=request.user)
-#     return render(request, 'products/follower.html', {'all_followed': all_followed})
+def follows_list(request):
+    all_followers = []
+    all_followed = []
+    if UserFollows.objects.filter(user=request.user):
+        for followed in UserFollows.objects.filter(user=request.user):
+            all_followers.append(followed.followed_user)
+    if UserFollows.objects.filter(followed_user=request.user):
+        for flwing in UserFollows.objects.filter(followed_user=request.user):
+            all_followed.append(flwing.user)
+    all_users = User.objects.all()
+    if request.method == 'GET':
+        context = {
+            'all_followers': all_followers,
+            'all_followed': all_followed,
+            'all_users': all_users,
+        }
+        return render(request, 'products/follower.html', context)
+    if request.method == 'POST':
+        if request.POST.get('followed_user'):
+            UserFollows(
+                user=request.user,
+                followed_user=User.objects.get(
+                    pk=request.POST['followed_user']
+                )
+            ).save()
+        if request.POST.get('remove_from_followers'):
+            UserFollows.objects.get(
+                user=request.user,
+                followed_user=User.objects.get(
+                    id=request.POST['remove_from_followers']
+                ),
+            ).delete()
+        return redirect('follower')
