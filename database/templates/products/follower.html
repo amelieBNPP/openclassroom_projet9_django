@@ -1,98 +1,62 @@
-<!DOCTYPE html>
+{% extends "../framework-menu.html" %} {% block content %}
+<h2>Follow others users on LitReview</h2>
 
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-    <link rel="stylesheet" href="../../static/css/style.css" />
-    
-    <title>LITReview</title>
-  </head>
+Find new followers : </br>
+<div class="sub-follower">
+  <form action="{% url 'follower' %}" method="post" id="sub-follower-form">
+    <div class="sub-follower-select">
+      {% csrf_token %}
+      <select class="sub-follower-selected" name="sub-new-following">
+        <option value="" selected>users</option>
+        {% for user in all_users %}
+          <option value={{ user.id }}>{{ user.username }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="sub-follower-post">
+      <button type="submit" class="sub-button">Follow</button>
+    </div>
+  </form>
+</div>
 
-  <body>
-    <header>
-      <div class="head">
-        <img src="../../static/img/Logo.png" alt="Logo Image" id="Logo" />
-      </div>
-      <h1>Welcome on LITReview website</h1>
-      <div></div>
-    </header>
-    <section class="main-container">
-      <div class="sub-container">
-        <ul class="navbar-nav">
-          <p id="user">Hello {{request.user}}</p>
-          <li><a href="{% url 'home' %}"> Home </a></li>
-          <li><a href="{% url 'get' %}"> Get comments </a></li>
-          <li><a href="{% url 'post' %}"> Post comments </a></li>
-          <li><a href="{% url 'follower' %}"> Followers </a></li>
-          <li><a href="{% url 'login' %}"> Logout </a></li>
-        </ul>
-      </div>
-      <div class="sub-container">
-        <h2>Follow others users on LitReview</h2>
+</br>User I follow :
+<div class="sub-following">
+  <form action="{% url 'follower' %}" method="post" id="sub-following-form">
+    <div class="sub-follower-select">
+      {% csrf_token %}
+      <table class="table table-bordered table-responsive-md table-striped text-center">
+        <thead>
+          <tr>
+            <th class="id">Id</th>
+            <th class="name">User name</th>
+            <th class="text-center">Remove</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for user in all_followers %}
+          <tr>
+            <td>{{ user.id }}</td>
+            <td class="sub-follower-selected" value={{ user.id }}>{{ user.username }}</td>
+            <td><button type="submit" class="sub-button" name="sub-following-button" value={{ user.id }}>Unfollow</button></td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </form>
+</div>
 
-        Find new followers : </br>
-        <div class="sub-follower">
-          <form action="{% url 'follower' %}" method="post" id="sub-follower-form">
-            <div class="sub-follower-select">
-              {% csrf_token %}
-              <select class="sub-follower-selected" name="sub-new-following">
-                <option value="" selected>users</option>
-                {% for user in all_users %}
-                  <option value={{ user.id }}>{{ user.username }}</option>
-                {% endfor %}
-              </select>
-            </div>
-            <div class="sub-follower-post">
-              <button type="submit" class="sub-button">Follow</button>
-            </div>
-          </form>
-        </div>
+</br>User who follow me :
+<div class="followd">
+  <ul id="flw-list">
+    {% if all_followed %}
+      {% for followed in all_followed %}
+        <li>{{ followed }}</li>
+      {% endfor %}
+    {% else %}
+      <li>No user follow you</li>
+    {% endif%}
+  </ul>
+</div>
 
-        </br>User I follow :
-        <div class="sub-following">
-          <form action="{% url 'follower' %}" method="post" id="sub-following-form">
-            <div class="sub-follower-select">
-              {% csrf_token %}
-              <table class="table table-bordered table-responsive-md table-striped text-center">
-                <thead>
-                  <tr>
-                    <th class="id">Id</th>
-                    <th class="name">User name</th>
-                    <th class="text-center">Remove</th>
-                  </tr>
-                </thead>
-                <tbody>
-                {% for user in all_followers %}
-                  <tr>
-                    <td>{{ user.id }}</td>
-                    <td class="sub-follower-selected" value={{ user.id }}>{{ user.username }}</td>
-                    <td><button type="submit" class="sub-button" name="sub-following-button" value={{ user.id }}>Unfollow</button></td>
-                  </tr>
-                {% endfor %}
-                </tbody>
-              </table>
-            </div>
-          </form>
-        </div>
-
-        </br>User who follow me :
-        <div class="followd">
-          <ul id="flw-list">
-            {% if all_followed %}
-              {% for followed in all_followed %}
-                <li>{{ followed }}</li>
-              {% endfor %}
-            {% else %}
-              <li>No user follow you</li>
-            {% endif%}
-          </ul>
-        </div>
-
-      </div>
-    </section>
-  </body>
-</html>
+{% endblock %}

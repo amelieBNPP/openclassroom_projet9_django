@@ -1,50 +1,16 @@
-<!DOCTYPE html>
-
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../../static/css/style.css" />
-    <title>LITReview</title>
-  </head>
-
-  <body>
-    <header>
-      <div class="head">
-        <img src="../../static/img/Logo.png" alt="Logo Image" id="Logo" />
-      </div>
-      <h1>Welcome on LITReview website</h1>
-      <div></div>
-    </header>
-    <section class="main-container">
-      <div class="sub-container">
-        <ul class="navbar-nav">
-          <p id="user">Hello {{request.user}}</p>
-          <li><a href="{% url 'home' %}"> Home </a></li>
-          <li><a href="{% url 'get' %}"> Get comments </a></li>
-          <li><a href="{% url 'post' %}"> Post comments </a></li>
-          <li><a href="{% url 'follower' %}"> Followers </a></li>
-          <li><a href="{% url 'login' %}"> Logout </a></li>
-        </ul>
-      </div>
-      <div class="sub-container">
-        <h2>Get comment on LITReview website</h2>
-        <p>Find ticket to require comment on book :</p>
-        {% for ticket in all_tickets %}
-        <strong>{{ ticket }}</strong>
-        <ul id="tkt-list">
-          <li>Description : {{ ticket.description }}</li>
-          <li>
-            Image :
-            <img src="../../static/{{ticket.image}}" alt="{{ ticket }}" />
-          </li>
-          <li>Post by : {{ ticket.user }}</li>
-          <li>Created on : {{ ticket.time_created }}</li>
-        </ul>
-        <br />
-        {% endfor %}
-      </div>
-    </section>
-  </body>
-</html>
+{% extends "../framework-menu.html" %} {% block content %}
+<h2>Get comment on LITReview website</h2>
+<p>Find ticket to require comment on book :</p>
+{% for ticket in all_tickets %}
+<strong>{{ ticket }}</strong>
+<ul id="tkt-list">
+  <li>Description : {{ ticket.description }}</li>
+  <li>
+    Image :
+    <img src="../../static/{{ticket.image}}" alt="{{ ticket }}" />
+  </li>
+  <li>Post by : {{ ticket.user }}</li>
+  <li>Created on : {{ ticket.time_created }}</li>
+</ul>
+<br />
+{% endfor %} {% endblock %}

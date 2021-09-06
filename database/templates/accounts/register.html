@@ -1,35 +1,15 @@
-<!DOCTYPE html>
+{% extends "../framework-header.html" %} {% block page %}
+<form id="form-loggin" method="POST" action="">
+  {% csrf_token %}
+  <div>{{form.username.label}} {{form.username}}</div>
+  <div>{{form.email.label}} {{form.email}}</div>
+  <div>{{form.password1.label}} {{form.password1}}</div>
+  <div>{{form.password2.label}} {{form.password2}}</div>
+  <input type="submit" name="Create user" />
+</form>
 
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../../static/css/style.css" />
-    <title>LITReview</title>
-  </head>
+{{form.errors}}
 
-  <body>
-    <header>
-      <div class="head">
-        <img src="../../static/img/Logo.png" alt="Logo Image" id="Logo" />
-      </div>
-      <h1>Welcome on LITReview website</h1>
-      <div></div>
-    </header>
-    <section class="loggin-container">
-      <form id="form-loggin" method="POST" action="">
-        {% csrf_token %}
-        <div>{{form.username.label}} {{form.username}}</div>
-        <div>{{form.email.label}} {{form.email}}</div>
-        <div>{{form.password1.label}} {{form.password1}}</div>
-        <div>{{form.password2.label}} {{form.password2}}</div>
-        <input type="submit" name="Create user" />
-      </form>
-
-      {{form.errors}} 
-      
-      <div>Already have an account? <a href="{% url 'login'%}">Sign Up</a>
-    </section>
-  </body>
-</html>
+<div>
+  Already have an account? <a href="{% url 'login'%}">Sign Up</a> {% endblock %}
+</div>

@@ -1,51 +1,16 @@
-<!DOCTYPE html>
+{% extends "../framework-menu.html" %} {% block content %}
 
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../../static/css/style.css" />
-    <title>LITReview</title>
-  </head>
-
-  <body>
-    <header>
-      <div class="head">
-        <img src="../../static/img/Logo.png" alt="Logo Image" id="Logo" />
-      </div>
-      <h1>Welcome on LITReview website</h1>
-      <div></div>
-    </header>
-    <section class="main-container">
-      <div class="sub-container">
-        <ul class="navbar-nav">
-          <p id="user">Hello {{request.user}}</p>
-          <li><a href="{% url 'home' %}"> Home </a></li>
-          <li><a href="{% url 'get' %}"> Get comments </a></li>
-          <li><a href="{% url 'post' %}"> Post comments </a></li>
-          <li><a href="{% url 'follower' %}"> Followers </a></li>
-          <li><a href="{% url 'login' %}"> Logout </a></li>
-        </ul>
-      </div>
-      <div class="sub-container">
-        <h2>Introduction</h2>
-        <p>
-          <span>Hello,</span>
-          <span>
-            This website is usefull if you want to learn more about book.
-          </span>
-          <span>
-            You can also help the communauty, sharing your felling about book
-            you read.
-          </span>
-        </p>
-        <img
-          src="../../static/img/Bibliotheque.png"
-          alt="Bibliotheque Image"
-          id="Bibliotheque"
-        />
-      </div>
-    </section>
-  </body>
-</html>
+<h2>Introduction</h2>
+<p>
+  <span>Hello,</span>
+  <span> This website is usefull if you want to learn more about book. </span>
+  <span>
+    You can also help the communauty, sharing your felling about book you read.
+  </span>
+</p>
+<img
+  src="../../static/img/Bibliotheque.png"
+  alt="Bibliotheque Image"
+  id="Bibliotheque"
+/>
+{% endblock %}

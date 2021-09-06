@@ -64,7 +64,7 @@ p {
   text-align: center;
 }
 
-ul #tkt-list {
+/* ul #tkt-list {
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -72,11 +72,11 @@ ul #tkt-list {
   background-color: #f1f1f1;
   height: 100%; /* Full height */
   overflow: auto; /* Enable scrolling if the sidenav has too much content */
-}
+} */
 
-ul #flw-list {
+/* ul #flw-list {
   list-style-type: square;
-}
+} */
 
 li a {
   display: block;
@@ -100,11 +100,3 @@ table,
 td {
   border: 1px solid #333;
 }
-
-/* FORM */
-/* #post-form {
-  margin-top: 40px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-} */

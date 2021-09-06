@@ -1,40 +1,19 @@
-<!DOCTYPE html>
+{% extends "../framework-header.html" %} {% block page %}
+<div>
+  <form id="form-loggin" method="POST" action="">
+    {% csrf_token %}
+    <div>{{form.username.label}} {{form.username}}</div>
+    <div>{{form.password1.label}} {{form.password1}}</div>
 
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../../static/css/style.css" />
-    <title>LITReview</title>
-  </head>
+    <input type="submit" value="Login" name="Create user" />
+  </form>
 
-  <body>
-    <header>
-      <div class="head">
-        <img src="../../static/img/Logo.png" alt="Logo Image" id="Logo" />
-      </div>
-      <h1>Welcome on LITReview website</h1>
-      <div></div>
-    </header>
-    <section class="loggin-container">
-      <div>
-        <form id="form-loggin" method="POST" action="">
-          {% csrf_token %}
-          <div>{{form.username.label}} {{form.username}}</div>
-          <div>{{form.password1.label}} {{form.password1}}</div>
+  {% for message in messages %}
+  <p id="messages">{{message}}</p>
+  {% endfor %}
+</div>
 
-          <input type="submit" value="Login" name="Create user" />
-        </form>
-
-        {% for message in messages %}
-        <p id="messages">{{message}}</p>
-        {% endfor %}
-      </div>
-
-      <div>
-        <p>Don't have an account? <a href="{% url 'register'%}">Sign Up</a></p>
-      </div>
-    </section>
-  </body>
-</html>
+<div>
+  <p>Don't have an account? <a href="{% url 'register'%}">Sign Up</a></p>
+</div>
+{% endblock %}
