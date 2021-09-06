@@ -33,52 +33,65 @@
       </div>
       <div class="sub-container">
         <h2>Follow others users on LitReview</h2>
+
         Find new followers : </br>
-        <div class="follower">
-          <select id="user-selecter">
-            <option value="users" selected>users</option>
-            {% for user in all_users %}
-              <option value={{ user.username }}>{{ user.username }}</option>
-            {% endfor %}
-          </select>
-          <form action="follower" methode="POST">
-            {% csrf_token %}
-            <button type="submit" class="user-submited">
-              Follow
-            </button>
+        <div class="sub-follower">
+          <form action="{% url 'follower' %}" method="post" id="sub-follower-form">
+            <div class="sub-follower-select">
+              {% csrf_token %}
+              <select class="sub-follower-selected" name="sub-new-following">
+                <option value="" selected>users</option>
+                {% for user in all_users %}
+                  <option value={{ user.id }}>{{ user.username }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="sub-follower-post">
+              <button type="submit" class="sub-button">Follow</button>
+            </div>
           </form>
         </div>
 
         </br>User I follow :
-        <div class="followig">
-          </br>
-          <table>
-            <tbody>
-              {% if all_followers %}
-                {% for follower in all_followers %}
+        <div class="sub-following">
+          <form action="{% url 'follower' %}" method="post" id="sub-following-form">
+            <div class="sub-follower-select">
+              {% csrf_token %}
+              <table class="table table-bordered table-responsive-md table-striped text-center">
+                <thead>
                   <tr>
-                    <td>{{ follower.id }}</td>
-                    <td><button type="submit" class="user-unfollowed" name="delete"></td>
+                    <th class="id">Id</th>
+                    <th class="name">User name</th>
+                    <th class="text-center">Remove</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for user in all_followers %}
+                  <tr>
+                    <td>{{ user.id }}</td>
+                    <td class="sub-follower-selected" value={{ user.id }}>{{ user.username }}</td>
+                    <td><button type="submit" class="sub-button" name="sub-following-button" value={{ user.id }}>Unfollow</button></td>
                   </tr>
                 {% endfor %}
-              {% else %}
-                <tr>You do not follow any user</tr>
-              {% endif %}
-            </tbody>
-          </table>
+                </tbody>
+              </table>
+            </div>
+          </form>
         </div>
-        </br>User who follow me : </br>
-          <div class="followd">
-            <ul id="flw-list">
-              {% if all_followed %}
-                {% for followed in all_followed %}
-                  <li>{{ followed }}</li>
-                {% endfor %}
-              {% else %}
-                <li>No user follow you</li>
-              {% endif%}
-            </ul>
-          </div>
+
+        </br>User who follow me :
+        <div class="followd">
+          <ul id="flw-list">
+            {% if all_followed %}
+              {% for followed in all_followed %}
+                <li>{{ followed }}</li>
+              {% endfor %}
+            {% else %}
+              <li>No user follow you</li>
+            {% endif%}
+          </ul>
+        </div>
+
       </div>
     </section>
   </body>

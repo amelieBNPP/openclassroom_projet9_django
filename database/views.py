@@ -87,7 +87,7 @@ def follows_list(request):
     if UserFollows.objects.filter(followed_user=request.user):
         for flwing in UserFollows.objects.filter(followed_user=request.user):
             all_followed.append(flwing.user)
-    all_users = User.objects.all()
+    all_users = set(User.objects.all()) - set(all_followers)
     if request.method == 'GET':
         context = {
             'all_followers': all_followers,
@@ -96,18 +96,18 @@ def follows_list(request):
         }
         return render(request, 'products/follower.html', context)
     if request.method == 'POST':
-        if request.POST.get('followed_user'):
+        if request.POST.get('sub-new-following'):
             UserFollows(
                 user=request.user,
                 followed_user=User.objects.get(
-                    pk=request.POST['followed_user']
+                    pk=request.POST['sub-new-following']
                 )
             ).save()
-        if request.POST.get('remove_from_followers'):
+        if request.POST.get('sub-following-button'):
             UserFollows.objects.get(
                 user=request.user,
                 followed_user=User.objects.get(
-                    id=request.POST['remove_from_followers']
+                    id=request.POST['sub-following-button']
                 ),
             ).delete()
         return redirect('follower')

@@ -2,7 +2,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.db import models
 from django.forms import forms, CharField, ImageField, ModelForm
-from .models import Ticket
+from .models import Ticket, UserFollows
 
 
 class CreateUserForm(UserCreationForm):

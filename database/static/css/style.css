@@ -64,7 +64,7 @@ p {
   text-align: center;
 }
 
-ul {
+ul #tkt-list {
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -72,6 +72,10 @@ ul {
   background-color: #f1f1f1;
   height: 100%; /* Full height */
   overflow: auto; /* Enable scrolling if the sidenav has too much content */
+}
+
+ul #flw-list {
+  list-style-type: square;
 }
 
 li a {
@@ -86,6 +90,15 @@ li a {
 li a:hover {
   background-color: #555;
   color: white;
+}
+
+button {
+  border-radius: 4px;
+}
+
+table,
+td {
+  border: 1px solid #333;
 }
 
 /* FORM */
