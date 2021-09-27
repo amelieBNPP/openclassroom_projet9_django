@@ -6,12 +6,14 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
 from django.contrib.auth.forms import UserCreationForm
-from .forms import CreateTicketForm, CreateUserForm
+from .forms import CreateTicketForm, CreateUserForm, CreateReviewForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .models import Ticket, UserFollows
+from .models import Ticket, UserFollows, Review
 from django.contrib.auth.models import User
+from operator import attrgetter
+
 # Create your views here.
 
 
@@ -46,9 +48,7 @@ def loginPage(request):
             return redirect('home')
         else:
             messages.info(request, 'username or password is incorrect')
-
-    context = {'form': form}
-    return render(request, 'accounts/login.html', context)
+    return render(request, 'accounts/login.html', {'form': form})
 
 
 def logoutUser(request):
@@ -58,26 +58,61 @@ def logoutUser(request):
 
 @login_required(login_url='login')
 def getComment(request):
-    all_tickets = Ticket.objects.all()
-    return render(request, 'products/get.html', {'all_tickets': all_tickets})
+    if request.method == 'POST':
+        print("est on ici")
+        if request.POST.get('sub-ask-review-button'):
+            ticket_review = Ticket.objects.get(
+                id=request.POST['sub-ask-review-button']
+            )
+            form_review = CreateReviewForm()
+            return render(
+                request, 'products/review.html', {
+                    'ticket_review': ticket_review,
+                    'form_review': form_review
+                }
+            )
+        if request.POST.get('sub-send-review-button'):
+            form_review = CreateReviewForm(request.POST)
+            form_review.instance.user = request.user
+            form_review.instance.ticket = Ticket.objects.get(
+                id=request.POST['sub-send-review-button']
+            )
+            if form_review.is_valid():
+                print("deja ici")
+                form_review.save()
+                Ticket.objects.filter(
+                    id=request.POST['sub-send-review-button']
+                ).update(reviewed=True)
+            headline = form_review.cleaned_data.get('headline')
+            return redirect('get')
+    if request.method == 'GET':
+        tickets_to_review = list(Ticket.objects.filter(reviewed=False))
+        tickets_reviewed = list(Review.objects.all())
+        all_data = tickets_to_review + tickets_reviewed
+        all_data.sort(key=attrgetter('time_created'), reverse=True)
+        return render(request, 'products/get.html', {'all_data': all_data})
 
 
-@login_required(login_url='login')
+@ login_required(login_url='login')
 def postComment(request):
-    form = CreateTicketForm()
+    form_post_comment = CreateTicketForm()
     if request.method == "POST":
-        form = CreateTicketForm(request.POST)
-        form.instance.user = request.user
-        if form.is_valid():
-            form.save()
-            title = form.cleaned_data.get('title')
+        form_post_comment = CreateTicketForm(request.POST)
+        form_post_comment.instance.user = request.user
+        if request.FILES:
+            form_post_comment.instance.image = request.FILES['image']
+        if form_post_comment.is_valid():
+            form_post_comment.save()
+            title = form_post_comment.cleaned_data.get('title')
             messages.success(
                 request, f'information regarding your book, {title} has been saved')
-            return redirect('products/get.html')
-    return render(request, 'products/post.html', {'form': form})
+            return redirect('get')
+        else:
+            form_post_comment = CreateTicketForm()
+    return render(request, 'products/post.html', {'form_post_comment': form_post_comment})
 
 
-@login_required(login_url='login')
+@ login_required(login_url='login')
 def follows_list(request):
     all_followers = []
     all_followed = []
@@ -111,3 +146,27 @@ def follows_list(request):
                 ),
             ).delete()
         return redirect('follower')
+
+
+@ login_required(login_url='login')
+def review_page(request):
+    form = CreateReviewForm()
+    if request.method == "POST":
+        form = CreateTicketForm(request.POST)
+        form.instance.user = request.user
+        if form.is_valid():
+            form.save()
+            messages.success(
+                request, f'information regarding your book, has been saved')
+            return redirect('products/get.html')
+    return render(request, 'products/review.html', {'form': form})
+
+
+def error(request):
+    template = loader.get_template('/404.html')
+    return HttpResponse(template.render(request=request))
+
+
+def blank(request):
+    template = loader.get_template('/blank.html')
+    return HttpResponse(template.render(request=request))
