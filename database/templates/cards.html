@@ -1,0 +1,109 @@
+{% block card_content %}
+
+<!-- Begin Page Content -->
+<!-- Content Wrapper -->
+<div id="content" class="col justify-content-center">
+    <!-- Main Content -->
+    <div id="content">
+    {% comment %} {% if form_review or ticket %} {% endcomment %}
+        <!-- Basic Card Example -->
+        <div class="card shadow mb-3">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Ticket - {{ ticket }}</h6>
+            </div>
+            <div class="card-body">
+                <div class="text-center">
+                    <p class="mb-1 small">Post by : {{ ticket.user }} </p>
+                    <p class="mb-1 small">Created on : {{ ticket.time_created }} </p>
+                    <hr>
+                    <p>Description : {{ ticket.description }} </p>
+                    <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+                                    src="../../media/{{ticket.image}}" alt="{{ ticket.title }}">
+                    {% if not is_review and is_card%}
+                        </br><button type="submit" class="btn btn-primary btn-block" name="sub-ask-review-button" value={{ ticket.id }}>Add review</button>
+                    {% elif is_review and not is_card %}
+                        <hr>
+                        <div class="form">
+                            <form action="" method="post" id="post-form">
+                                {% csrf_token %}{{ form_review.as_p }}
+                                <button type="submit" class="sub-button" name="sub-send-review-button" value={{ ticket_review.id }}>Submit</button>
+                            </form>
+                        </div>
+
+
+                            {% comment %} <link href="../static/css/stars.css" rel="stylesheet"> {% endcomment %}
+                            {% comment %} <script src="../static/js/stars.js" defer></script> {% endcomment %}
+                            {% comment %} <script async custom-element="amp-form" src="https://cdn.ampproject.org/v0/amp-form-0.1.js"></script>
+                            <script async custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.2.js"></script> {% endcomment %}
+                            {% comment %} <form action="" method="post" id="rating"> {% endcomment %}
+                            {% comment %} action-xhr="https://amp.dev/documentation/examples/interactivity-dynamic-content/star_rating/set" target="_blank"> {% endcomment %}
+                                {% comment %} {% csrf_token %} {% endcomment %}
+                                {% comment %} {{% form_review.p %}} {% endcomment %}
+                                {% comment %} <div class="mb-3">
+                                    <label>Title</br></label>
+                                    <input type="text" class="form-control" value={{ form_review.headline }}>
+                                </div> {% endcomment %}
+                                {% comment %}<div class="mb-0">
+                                    <label>Rating</br></label>
+                                    <fieldset class="rating" value={{ form_review.rating }}>
+                                        <input name="rating" type="radio" id="rating5" value="5" on="change:rating.submit">
+                                        <label for="rating5" title="5 stars">☆</label>
+
+                                        <input name="rating" type="radio" id="rating4" value="4" on="change:rating.submit">
+                                        <label for="rating4" title="4 stars">☆</label>
+
+                                        <input name="rating" type="radio" id="rating3" value="3" on="change:rating.submit">
+                                        <label for="rating3" title="3 stars">☆</label>
+
+                                        <input name="rating" type="radio" id="rating2" value="2" on="change:rating.submit" checked="checked">
+                                        <label for="rating2" title="2 stars">☆</label>
+
+                                        <input name="rating" type="radio" id="rating1" value="1" on="change:rating.submit">
+                                        <label for="rating1" title="1 stars">☆</label>
+                                    </fieldset> {% endcomment %}
+                                    {% comment %} {{ form_review.rating }} {% endcomment %}
+                                    {% comment %} <form class="rate-form" action="" methode="">
+                                        {% csrf_token %} {% endcomment %}
+                                        {% comment %} <fieldset class="rating" value={{ form_review.rating }}>  {% endcomment %}
+                                        {% comment %} <input type="radio" class="fa fa-star fa-2x my-btn checked" id="first"></button>
+                                        <input type="radio" class="fa fa-star fa-2x my-btn checked" id="second"></input>
+                                        <input type="radio" class="fa fa-star fa-2x my-btn checked" id="third"></input>
+                                        <input type="radio" class="fa fa-star fa-2x my-btn" id="fourth"></input>
+                                        <input type="radio" class="fa fa-star fa-2x my-btn" id="fifth"></input> {% endcomment %}
+                                        {% comment %} <input type="radio" id="star5" name="rating" value="5" />
+                                        <label class="full" for="star5" title="Awesome - 5 stars"></label> 
+                                        <input type="radio" id="star4" name="rating" value="4" />
+                                        <label class="full" for="star4" title="Pretty good - 4 stars"></label> 
+                                        <input type="radio" id="star3" name="rating" value="3" />
+                                        <label class="full" for="star3" title="Meh - 3 stars"></label> 
+                                        <input type="radio" id="star2" name="rating" value="2" />
+                                        <label class="full" for="star2" title="Kinda bad - 2 stars"></label> 
+                                        <input type="radio" id="star1" name="rating" value="1" />
+                                        <label class="full" for="star1" title="Sucks big time - 1 star">
+                                        <input type="radio" class="reset-option" name="rating" value="reset" />  {% endcomment %}
+                                    {% comment %} </fieldset> {% endcomment %}
+                                    {% comment %} </form>
+                                    <div id="confirm-box"></div> {% endcomment %}
+                                {% comment %} <div class="mb-0">
+                                    <label>Rating</br></label>
+                                    <input type="text" class="form-control" value={{ form_review.rating }}>
+                                </div>
+                                <div class="mb-0">
+                                    <label>Book description</br></label>
+                                    <textarea type="textarea" class="form-control" value={{ form_review.body }}></textarea>
+                                </div></br>
+                                <button type="submit" class="btn btn-primary btn-block" name="sub-send-review-button" value={{ form_review.id }}>Submit</button>
+                            </form> {% endcomment %}
+                    {% else %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% comment %} {% else %}
+    <h1>ERROR</h1>
+    {% endif %} {% endcomment %}
+    </div>
+
+</div>
+<!-- /.container-fluid -->
+{% endblock %}

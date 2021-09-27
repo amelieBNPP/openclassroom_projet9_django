@@ -1,4 +1,103 @@
-{% extends "../framework-menu.html" %} {% block content %}
+{% extends "../framework.html" %} {% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+  <!-- Page Heading -->
+  <div class="text-center">
+    <h1 class="h3 mb-1 text-gray-800">Follow others users on LitReview</h1></br>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-xl8-6 mx-auto">  
+        <div class="card shadow mb-4">
+          <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Users followed</h6>
+          </div> 
+          <div class="card-body">
+            <div class="table-responsive">        
+              <form action="{% url 'follower' %}" method="post" id="sub-follower-form">
+                <table class="table text-center" style="border-top-style: none;"><tbody>
+                  <tr>
+                    <th>
+                      <div class="dropdown mb-4">
+                          {% csrf_token %}
+                          <select class="btn btn-primary dropdown-toggle" name="sub-new-following">
+                            <option value="" selected>New users to follow</option>
+                            {% for user in all_users %}
+                            <option value={{ user.id }}>{{ user.username }}</option>
+                            {% endfor %}
+                          </select>
+                      </div>
+                    </th>
+                    <th>
+                      <div class="sub-follower-post">
+                        <button type="submit" class="btn btn-success btn-circle">
+                          <i class="fas fa-check"></i>
+                        </button>
+                      </div>
+                    </th>
+                  </tr>
+                </tbody></table>
+              </form>
+            </div>
+          
+            <div class="table-responsive">
+              <form action="{% url 'follower' %}" method="post" id="sub-following-form">
+                <div class="sub-follower-select">
+                {% csrf_token %}
+                  <table class="table table-bordered table-striped text-center" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                      <tr>
+                        <th>id</th>
+                        <th>username</th>
+                        <th>Unfollow</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in all_followers %}
+                      <tr>
+                        <td>{{ user.id }}</td>
+                        <td class="sub-follower-selected" value={{ user.id }}>{{ user.username }}</td>
+                        <td>
+                          <button type="submit" class="btn btn-danger btn-circle" name="sub-following-button" value={{ user.id }}>
+                            <i class="fas fa-trash"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="card shadow mb-4">
+          <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Followers</h6>
+          </div> 
+          <div class="card-body">
+            <div class="follower">
+              <ul class="list-group list-group-flush text-center" id="flw-list">
+                {% if all_followed %}
+                  {% for followed in all_followed %}
+                    <li class="list-group-item">{{ followed }}</li>
+                  {% endfor %}
+                {% else %}
+                  <li class="list-group-item">No user follow you</li>
+                {% endif%}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% comment %} {% extends "../framework.html" %} {% block content %}
 <h2>Follow others users on LitReview</h2>
 
 Find new followers : </br>
@@ -47,7 +146,7 @@ Find new followers : </br>
 </div>
 
 </br>User who follow me :
-<div class="followd">
+<div class="follower">
   <ul id="flw-list">
     {% if all_followed %}
       {% for followed in all_followed %}
@@ -59,4 +158,4 @@ Find new followers : </br>
   </ul>
 </div>
 
-{% endblock %}
+{% endblock %} {% endcomment %}

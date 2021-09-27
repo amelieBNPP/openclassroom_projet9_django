@@ -1,16 +1,20 @@
-{% extends "../framework-menu.html" %} {% block content %}
+{% extends "../framework.html" %} {% block content %}
+{% load static %}
+  <!-- Begin Page Content -->
+  <div class="container-fluid">
 
-<h2>Introduction</h2>
-<p>
-  <span>Hello,</span>
-  <span> This website is usefull if you want to learn more about book. </span>
-  <span>
-    You can also help the communauty, sharing your felling about book you read.
-  </span>
-</p>
-<img
-  src="../../static/img/Bibliotheque.png"
-  alt="Bibliotheque Image"
-  id="Bibliotheque"
-/>
+      <!-- Page Heading -->
+      <div class="text-center">
+          <h1 class="h3 mb-1 text-gray-800">Welcome on liteReview website</h1></br>
+          <p class="mb-4">This website is usefull if you want to learn more about book.</br>
+          You can also help the communauty, sharing your felling about book you read.</p>
+      
+          <img class="w-50 p-3 rounded"
+            src="{% static 'img/Bibliotheque.png' %}"
+            alt="Bibliotheque Image"
+            id="Bibliotheque"
+          />
+
+      </div>
+  </div>
 {% endblock %}

@@ -1,16 +1,39 @@
-{% extends "../framework-menu.html" %} {% block content %}
-<h2>Get comment on LITReview website</h2>
-<p>Find ticket to require comment on book :</p>
-{% for ticket in all_tickets %}
-<strong>{{ ticket }}</strong>
-<ul id="tkt-list">
-  <li>Description : {{ ticket.description }}</li>
-  <li>
-    Image :
-    <img src="../../static/{{ticket.image}}" alt="{{ ticket }}" />
-  </li>
-  <li>Post by : {{ ticket.user }}</li>
-  <li>Created on : {{ ticket.time_created }}</li>
-</ul>
-<br />
-{% endfor %} {% endblock %}
+{% extends "../framework.html" %} {% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+  <!-- Page Heading -->
+  <div class="text-center">
+    <h1 class="h3 mb-1 text-gray-800">Get comment on LITReview website</h1>
+    <p class="mb-4"></br>Find ticket to require comment on book :</p>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 mx-auto">
+        <form id="form-ask-review" method="POST" action="{% url 'get' %}">
+          {% csrf_token %}
+          {% for ticket in all_data %}
+            {% if ticket.title %} 
+            <div class="tickets-container">
+                {% include 'cards.html' with ticket=ticket is_review=False is_card=True hide_edit=True %}
+                {% block ticket_card %}
+                {% endblock %}
+            </div>
+            {% else %}
+            <div class="review-container">
+              {% csrf_token %}
+              <div class="tickets-container">
+                {% include 'reviews.html' with ticket=ticket is_review=True hide_edit=True %}
+                {% block reviews_card %}
+                {% endblock %}
+              </div>
+            </div>
+            {% endif %}
+          {% endfor %}
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
