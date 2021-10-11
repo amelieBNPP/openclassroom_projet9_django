@@ -1,6 +1,6 @@
 from django import template
 from django.contrib import auth
-from django.db.models import fields
+from django.db.models import fields, Value
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
@@ -9,7 +9,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import CreateTicketForm, CreateUserForm, CreateReviewForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import Ticket, UserFollows, Review
 from django.contrib.auth.models import User
 from operator import attrgetter
@@ -45,7 +45,7 @@ def loginPage(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('home')
+            return redirect('get')
         else:
             messages.info(request, 'username or password is incorrect')
     return render(request, 'accounts/login.html', {'form': form})
@@ -59,17 +59,20 @@ def logoutUser(request):
 @login_required(login_url='login')
 def getComment(request):
     if request.method == 'POST':
-        print("est on ici")
         if request.POST.get('sub-ask-review-button'):
             ticket_review = Ticket.objects.get(
                 id=request.POST['sub-ask-review-button']
             )
             form_review = CreateReviewForm()
             return render(
-                request, 'products/review.html', {
+                request,
+                'products/review.html',
+                {
                     'ticket_review': ticket_review,
-                    'form_review': form_review
-                }
+                    'form_review': form_review,
+                    'range_rate': range(5),
+                },
+
             )
         if request.POST.get('sub-send-review-button'):
             form_review = CreateReviewForm(request.POST)
@@ -78,7 +81,6 @@ def getComment(request):
                 id=request.POST['sub-send-review-button']
             )
             if form_review.is_valid():
-                print("deja ici")
                 form_review.save()
                 Ticket.objects.filter(
                     id=request.POST['sub-send-review-button']
@@ -86,11 +88,22 @@ def getComment(request):
             headline = form_review.cleaned_data.get('headline')
             return redirect('get')
     if request.method == 'GET':
-        tickets_to_review = list(Ticket.objects.filter(reviewed=False))
-        tickets_reviewed = list(Review.objects.all())
+        followed_users = [object.followed_user
+                          for object in UserFollows.objects.all()
+                          if object.user == request.user]
+        tickets_to_review = [
+            ticket for ticket in list(Ticket.objects.filter(reviewed=False))
+            if (ticket.user in followed_users)
+            or (ticket.user == request.user)
+        ]
+        tickets_reviewed = [
+            ticket for ticket in list(Review.objects.all())
+            if (ticket.user in followed_users)
+            or (ticket.user == request.user)
+        ]
         all_data = tickets_to_review + tickets_reviewed
         all_data.sort(key=attrgetter('time_created'), reverse=True)
-        return render(request, 'products/get.html', {'all_data': all_data})
+        return render(request, 'products/get.html', {'all_data': all_data, 'range_rate': range(5)})
 
 
 @ login_required(login_url='login')
@@ -109,7 +122,7 @@ def postComment(request):
             return redirect('get')
         else:
             form_post_comment = CreateTicketForm()
-    return render(request, 'products/post.html', {'form_post_comment': form_post_comment})
+    return render(request, 'products/tickets.html', {'form_post_comment': form_post_comment})
 
 
 @ login_required(login_url='login')
@@ -160,6 +173,16 @@ def review_page(request):
                 request, f'information regarding your book, has been saved')
             return redirect('products/get.html')
     return render(request, 'products/review.html', {'form': form})
+
+
+def updateTicket(request):
+    template = loader.get_template('/update_ticket.html')
+    return HttpResponse(template.render(request=request))
+
+
+def deleteTicket(request):
+    template = loader.get_template('/delete_ticket.html')
+    return HttpResponse(template.render(request=request))
 
 
 def error(request):

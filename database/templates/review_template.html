@@ -16,11 +16,11 @@
                         <p class="mb-1 small">Post by : {{ ticket.user }} </p>
                         <p class="mb-1 small">Created on : {{ ticket.time_created }} </p>
                         <hr>
-                        <h6 class="m-0 font-weight-bold text-primary">{{ ticket.headline }} - {{ ticket.rating }}</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">{{ ticket.headline }} - {% for i in range_rate %}{% if i < ticket.rating %}★{% else %}☆{% endif %}{% endfor %}</h6>
                         <p class="mb-1 small">{{ ticket.body }}</p>
                         <hr>
                         <div class="tickets-container">
-                            {% include 'cards.html' with ticket=ticket.ticket is_review=True is_card=True hide_edit=True %}
+                            {% include 'ticket_template.html' with ticket=ticket.ticket userReview=ticket.user is_review=True is_card=True hide_edit=True %}
                             {% block card_reviewed %}
                             {% endblock %}
                         </div>

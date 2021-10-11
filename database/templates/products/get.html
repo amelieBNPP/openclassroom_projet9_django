@@ -16,7 +16,7 @@
           {% for ticket in all_data %}
             {% if ticket.title %} 
             <div class="tickets-container">
-                {% include 'cards.html' with ticket=ticket is_review=False is_card=True hide_edit=True %}
+                {% include 'ticket_template.html' with ticket=ticket is_review=False is_card=True hide_edit=True %}
                 {% block ticket_card %}
                 {% endblock %}
             </div>
@@ -24,7 +24,7 @@
             <div class="review-container">
               {% csrf_token %}
               <div class="tickets-container">
-                {% include 'reviews.html' with ticket=ticket is_review=True hide_edit=True %}
+                {% include 'review_template.html' with ticket=ticket is_review=True hide_edit=True %}
                 {% block reviews_card %}
                 {% endblock %}
               </div>

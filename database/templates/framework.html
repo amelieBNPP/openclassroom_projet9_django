@@ -20,6 +20,8 @@
 
     <!-- Custom styles for this template-->
     <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
+    <script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
 
 </head>
 
@@ -46,7 +48,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'home' %}">
                     <i class="fas fa-home"></i>
-                    <span>Home</span></a>
+                    <span>About LiteReview</span></a>
             </li>
 
 
@@ -60,8 +62,8 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Comments:</h6>
-                        <a class="collapse-item" href="{% url 'get' %}">All comments</a>
-                        <a class="collapse-item" href="{% url 'post' %}">Ask comment</a>
+                        <a class="collapse-item" href="{% url 'get' %}">My actuality</a>
+                        <a class="collapse-item" href="{% url 'tickets' %}">Ask comment</a>
                     </div>
                 </div>
             </li>

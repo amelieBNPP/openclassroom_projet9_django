@@ -10,7 +10,7 @@
   <div class="container">
     <div class="row">
         <div class="col-sm-6 mx-auto">
-          {% include 'cards.html' with ticket=ticket_review is_review=True hide_edit=True %}
+          {% include 'ticket_template.html' with ticket=ticket_review is_review=True hide_edit=True %}
           {% block ticket_card %}
           {% endblock %}
         </div>
