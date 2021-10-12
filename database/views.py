@@ -58,6 +58,7 @@ def logoutUser(request):
 
 @login_required(login_url='login')
 def getComment(request):
+    print("getcomment..........")
     if request.method == 'POST':
         if request.POST.get('sub-ask-review-button'):
             ticket_review = Ticket.objects.get(
@@ -74,6 +75,18 @@ def getComment(request):
                 },
 
             )
+        if request.POST.get('delete-ticket-button'):
+            test = Ticket.objects.get(
+                user=request.user,
+                id=request.POST['delete-ticket-button']
+            ).delete()
+
+        if request.POST.get('delete-review-button'):
+            Review.objects.get(
+                user=request.user,
+                id=request.POST['delete-review-button']
+            ).delete()
+
         if request.POST.get('sub-send-review-button'):
             form_review = CreateReviewForm(request.POST)
             form_review.instance.user = request.user
@@ -86,7 +99,7 @@ def getComment(request):
                     id=request.POST['sub-send-review-button']
                 ).update(reviewed=True)
             headline = form_review.cleaned_data.get('headline')
-            return redirect('get')
+        return redirect('get')
     if request.method == 'GET':
         followed_users = [object.followed_user
                           for object in UserFollows.objects.all()
@@ -177,11 +190,6 @@ def review_page(request):
 
 def updateTicket(request):
     template = loader.get_template('/update_ticket.html')
-    return HttpResponse(template.render(request=request))
-
-
-def deleteTicket(request):
-    template = loader.get_template('/delete_ticket.html')
     return HttpResponse(template.render(request=request))
 
 
