@@ -1,11 +1,10 @@
-{% block card_content %}
+{% block ticket_content %}
 
 <!-- Begin Page Content -->
 <!-- Content Wrapper -->
 <div id="content" class="col justify-content-center">
     <!-- Main Content -->
     <div id="content">
-    {% comment %} {% if form_review or ticket %} {% endcomment %}
         <!-- Basic Card Example -->
         <div class="card shadow mb-3">
             <div class="card-header py-3">
@@ -13,53 +12,21 @@
             </div>
             <div class="card-body">
                 <div class="text-center">
-                    <p class="mb-1 small">Post by : {{ ticket.user }} </p>
-                    <p class="mb-1 small">Created on : {{ ticket.time_created }} </p>
+                    <p class="text-xs">
+                        Post by : {{ ticket.user }} </br>
+                        Created on : {{ ticket.time_created }} 
+                    </p>
                     <hr>
-                    <p>Description : {{ ticket.description }} </p>
+                    <p class="mb-1">{{ ticket.description }} </p>
                     <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
                                     src="../../media/{{ticket.image}}" alt="{{ ticket.title }}">
                     {% if not is_review and is_card%}
                         </br><button type="submit" class="btn btn-primary btn-block" name="sub-ask-review-button" value={{ ticket.id }}>Add review</button>
-                    {% elif is_review and not is_card %}
-                        <hr>
-                        <div class="form">
-                            <form action="" method="post" id="post-form">
-                                {% csrf_token %}
-                                <div class="mb-3">
-                                    <label>Title</br></label>
-                                    <input type="text" class="form-control" value="{{ form_review.headline }}">
-                                </div>
-                                <div class="mb-3">
-                                    <label>Rating 0-strongly not recommended --> 5- strongly recommended</br></label>
-                                    <select type="number" class="form-control" name="rating" min="0" max="5" id="id_rating" value={{form_review.rating}} ></select>
-                                </div>
-                                <label>Rating</label></br>
-                                <div class="dropdown mb-4">
-                                    {% csrf_token %}
-                                    <select class="btn btn-primary dropdown-toggle" name="sub-send-review-button">
-                                        <option value="" selected>your rating</option>
-                                        {% for user in all_users %}
-                                        <option value={{ form_review.rating }}>{{ form_review.rating }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                                {% comment %} <select class="btn btn-primary dropdown-toggle" value="{{ form_review.rating }}">
-                                    <option value="0" selected>{% for i in range_rate %}{% if i < 0 %}★{% else %}☆{% endif %}{% endfor %}</option>
-                                    {% for rate in range_rate %}
-                                            <option value="{{rate}}">{% for i in range_rate %}{% if i <= rate %}★{% else %}☆{% endif %}{% endfor %}</option>
-                                    {% endfor %}
-                                </select></br> {% endcomment %}
-                                 <div class="mb-0">
-                                    <label>Book description</br></label>
-                                    <textarea type="textarea" class="form-control" value="{{ form_review.body }}"></textarea>
-                                </div></br>
-                                <button type="submit" class="btn btn-primary btn-block" name="sub-send-review-button" value={{ ticket_review.id }}>Submit</button>
-                            </form>
-                        </div>
                     {% endif %}
-                    {% if request.user == ticket.user or request.user == userReview %}
-                    <hr>
+                    {% if request.user == ticket.user and not is_review%}
+                        {% if not is_review and is_card%}
+                            <hr>
+                        {% endif %}
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <a href="{% url 'update_ticket' %}" class="btn btn-primary btn-icon-split btn-sm btn-block">Update</a>
                         <a></a>

@@ -66,11 +66,11 @@ def getComment(request):
             form_review = CreateReviewForm()
             return render(
                 request,
-                'products/review.html',
+                'products/reviews.html',
                 {
                     'ticket_review': ticket_review,
                     'form_review': form_review,
-                    'range_rate': range(5),
+                    'rating_range': range(6),
                 },
 
             )

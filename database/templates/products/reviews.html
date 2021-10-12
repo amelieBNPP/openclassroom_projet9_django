@@ -9,33 +9,10 @@
   </div>
   <div class="container">
     <div class="row">
-        <div class="col-sm-6 mx-auto">
-          {% include 'ticket_template.html' with ticket=ticket_review is_review=True hide_edit=True %}
-          {% block ticket_card %}
-          {% endblock %}
-        </div>
+      {% include 'review_template.html' with ticket=ticket_review is_review=True is_card=False hide_edit=True %}
+      {% block review_content %}
+      {% endblock %}
     </div>
   </div>
 </div>
 {% endblock %}
-
-{% comment %} {% extends "../framework.html" %} {% block content %}
-<h2>Get comment on LITReview website</h2>
-<p>Find ticket to require comment on book :</p>
-<div class="review-container">
-  <div class="tickets-container">
-    {% csrf_token %}
-    <strong>{{ ticket_review }}</strong>
-    </br>Description : {{ ticket_review.description }}
-    <img src="../../media/{{ticket_review.image}}" alt="{{ ticket_review.title }}" />
-    </br>Post by : {{ ticket_review.user }} 
-    </br>Created on : {{ ticket_review.time_created }}
-  </div>
-  <div class="form">
-    <form action="" method="post" id="post-form">
-      {% csrf_token %}{{ form_review.as_p }}
-      <button type="submit" class="sub-button" name="sub-send-review-button" value={{ ticket_review.id }}>Submit</button>
-    </form>
-  </div>
-</div>
-{% endblock %} {% endcomment %}

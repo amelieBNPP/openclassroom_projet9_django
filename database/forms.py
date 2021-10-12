@@ -22,4 +22,11 @@ class CreateReviewForm(ModelForm):
         model = Review
         fields = ['headline', 'rating', 'body']
         # widgets = {'rating': ModelForm.NumberInput(attrs={'class': 'Stars'})}
-        # labels = {'rating': 'Note /5'}
+        labels = [
+            "Very strongly not recommended",
+            "strongly not recommended",
+            "not recommended",
+            "recommended",
+            "Very recommended",
+            "Very strongly recommended",
+        ]

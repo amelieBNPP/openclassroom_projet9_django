@@ -17,15 +17,15 @@
             {% if ticket.title %} 
             <div class="tickets-container">
                 {% include 'ticket_template.html' with ticket=ticket is_review=False is_card=True hide_edit=True %}
-                {% block ticket_card %}
+                {% block ticket_content %}
                 {% endblock %}
             </div>
             {% else %}
             <div class="review-container">
               {% csrf_token %}
               <div class="tickets-container">
-                {% include 'review_template.html' with ticket=ticket is_review=True hide_edit=True %}
-                {% block reviews_card %}
+                {% include 'review_template.html' with review=ticket ticket=ticket.ticket is_review=True is_card=True hide_edit=True %}
+                {% block review_content %}
                 {% endblock %}
               </div>
             </div>

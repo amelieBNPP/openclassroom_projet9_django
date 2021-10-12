@@ -1,37 +1,48 @@
-{% block reviews_content %}
+{% block review_content %}
 
     <!-- Begin Page Content -->
     <!-- Content Wrapper -->
     <div id="content" class="col justify-content-center">
         <!-- Main Content -->
         <div id="content">
-        {% comment %} {% if form_review or ticket %} {% endcomment %}
             <!-- Basic Card Example -->
             <div class="card shadow mb-3">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Review - {{ ticket.ticket.title }}</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Review - {{ ticket }}</h6>
                 </div>
                 <div class="card-body">
                     <div class="text-center">
-                        <p class="mb-1 small">Post by : {{ ticket.user }} </p>
-                        <p class="mb-1 small">Created on : {{ ticket.time_created }} </p>
-                        <hr>
-                        <h6 class="m-0 font-weight-bold text-primary">{{ ticket.headline }} - {% for i in range_rate %}{% if i < ticket.rating %}★{% else %}☆{% endif %}{% endfor %}</h6>
-                        <p class="mb-1 small">{{ ticket.body }}</p>
-                        <hr>
+                        {% if is_review and is_card %}
+                            <p class="text-xs">
+                                Post by : {{ review.user }} </br>
+                                Created on : {{ review.time_created }}
+                            </p>
+                            <hr>
+                            <h6 class="m-0 font-weight-bold text-primary">{{ review.headline }} - {% for i in range_rate %}{% if i < review.rating %}★{% else %}☆{% endif %}{% endfor %}</h6></br>
+                            <p class="mb-1">{{ review.body }}</p>
+                            </br>
+                        {% endif %}
                         <div class="tickets-container">
-                            {% include 'ticket_template.html' with ticket=ticket.ticket userReview=ticket.user is_review=True is_card=True hide_edit=True %}
+                            {% include 'ticket_template.html' with ticket=ticket is_review=True is_card=True hide_edit=True %}
                             {% block card_reviewed %}
                             {% endblock %}
                         </div>
+                        {% if is_review and not is_card %}
+                            {% include 'review_form.html' with ticket=ticket is_review=True is_card=True hide_edit=True %}
+                            {% block review_form %}
+                            {% endblock %}
+                        {% endif %}
+                        {% if request.user == review.user and is_card %}
+                            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                                <a href="{% url 'update_ticket' %}" class="btn btn-primary btn-icon-split btn-sm btn-block">Update</a>
+                                <a></a>
+                                <a href="{% url 'delete_ticket' %}" class="btn btn-primary btn-icon-split btn-sm btn-block">Delete</a>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
-        {% comment %} {% else %}
-        <h1>ERROR</h1>
-        {% endif %} {% endcomment %}
         </div>
-
     </div>
     <!-- /.container-fluid -->
 {% endblock %}
