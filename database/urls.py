@@ -12,7 +12,6 @@ urlpatterns = [
     path('get/', views.getComment, name='get'),
     path('tickets/', views.postComment, name='tickets'),
     path('follower/', views.follows_list, name='follower'),
-    path('update_ticket/', views.updateTicket, name='update_ticket'),
-    # path('error/', views.error, name='404'),
-    # path('blank/', views.blank, name='blank'),
+    path('update_ticket/<str:pk>/', views.updateTicket, name='update_ticket'),
+    path('update_review/<str:pk>/', views.updateReview, name='update_review'),
 ]

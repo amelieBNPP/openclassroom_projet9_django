@@ -1,20 +1,13 @@
-from django import template
-from django.contrib import auth
-from django.db.models import fields, Value
-from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
-from django.contrib.auth.forms import UserCreationForm
 from .forms import CreateTicketForm, CreateUserForm, CreateReviewForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import login_required
 from .models import Ticket, UserFollows, Review
 from django.contrib.auth.models import User
 from operator import attrgetter
-
-# Create your views here.
 
 
 @login_required(login_url='login')
@@ -58,7 +51,6 @@ def logoutUser(request):
 
 @login_required(login_url='login')
 def getComment(request):
-    print("getcomment..........")
     if request.method == 'POST':
         if request.POST.get('sub-ask-review-button'):
             ticket_review = Ticket.objects.get(
@@ -76,7 +68,7 @@ def getComment(request):
 
             )
         if request.POST.get('delete-ticket-button'):
-            test = Ticket.objects.get(
+            Ticket.objects.get(
                 user=request.user,
                 id=request.POST['delete-ticket-button']
             ).delete()
@@ -98,7 +90,6 @@ def getComment(request):
                 Ticket.objects.filter(
                     id=request.POST['sub-send-review-button']
                 ).update(reviewed=True)
-            headline = form_review.cleaned_data.get('headline')
         return redirect('get')
     if request.method == 'GET':
         followed_users = [object.followed_user
@@ -168,7 +159,7 @@ def follows_list(request):
             UserFollows.objects.get(
                 user=request.user,
                 followed_user=User.objects.get(
-                    id=request.POST['sub-following-button']
+                    pk=request.POST['sub-following-button']
                 ),
             ).delete()
         return redirect('follower')
@@ -182,22 +173,30 @@ def review_page(request):
         form.instance.user = request.user
         if form.is_valid():
             form.save()
-            messages.success(
-                request, f'information regarding your book, has been saved')
             return redirect('products/get.html')
     return render(request, 'products/review.html', {'form': form})
 
 
-def updateTicket(request):
-    template = loader.get_template('/update_ticket.html')
-    return HttpResponse(template.render(request=request))
+def updateTicket(request, pk):
+    ticket = Ticket.objects.get(id=pk)
+    form = CreateTicketForm(instance=ticket)
+    if request.method == "POST":
+        form = CreateTicketForm(request.POST, request.FILES, instance=ticket)
+        form.instance.user = request.user
+        if form.is_valid():
+            form.save()
+            return redirect('get')
+    return render(request, 'update_ticket.html', {'form': form})
 
 
-def error(request):
-    template = loader.get_template('/404.html')
-    return HttpResponse(template.render(request=request))
-
-
-def blank(request):
-    template = loader.get_template('/blank.html')
-    return HttpResponse(template.render(request=request))
+def updateReview(request, pk):
+    review = Review.objects.get(id=pk)
+    ticket = Ticket.objects.get(id=review.ticket.id)
+    form = CreateReviewForm(instance=review)
+    if request.method == "POST":
+        form = CreateReviewForm(request.POST, instance=review)
+        form.instance.user = request.user
+        if form.is_valid():
+            form.save()
+            return redirect('get')
+    return render(request, 'update_review.html', {'form': form, 'ticket': ticket, 'rating_range': range(6)})

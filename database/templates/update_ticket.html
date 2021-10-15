@@ -1,0 +1,46 @@
+{% extends "framework.html" %} {% block content %}
+<!-- Begin Page Content -->
+<div class="container-fluid">
+  <!-- Page Heading -->
+    <div class="text-center">
+        <h1 class="h3 mb-1 text-gray-800">Update comment on LITReview website</h1>
+        <p class="mb-4"></br>Update ticket you already share:</p> 
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 mx-auto"> 
+                <div class="card-body">
+                    <div id="content-wrapper" class="justify-content-center"> 
+                                
+                        <form action="" method="post" id="post-form" enctype='multipart/form-data'>
+                            {% csrf_token %}
+                            
+                            <div class="mb-3">
+                                <label>Book title</br></label>
+                                <input type="text" class="form-control" value={{ form.title }}/>
+                            </div>
+                            <div class="mb-0">
+                                <label>Update ticket</br></label>
+                                <textarea type="textarea" class="form-control" value={{ form.description }}></textarea>
+                            </div>
+
+                            <label class="btn btn-primary btn-block" >
+                            <input type="file" style="display: none;" value={{ form.image }}>
+                            <i class="fas fa-fw fa-folder"></i>Upload book image
+                            </label>
+
+
+                            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                                <button type="submit" class="btn btn-primary btn-icon-split btn-sm btn-block">Update</button>
+                                <a></a>
+                                <a class="btn btn-primary btn-icon-split btn-sm btn-block" href="{% url 'get' %}">Cancel</a>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

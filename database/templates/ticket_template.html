@@ -28,7 +28,7 @@
                             <hr>
                         {% endif %}
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <a href="{% url 'update_ticket' %}" class="btn btn-primary btn-icon-split btn-sm btn-block">Update</a>
+                        <a class="btn btn-primary btn-icon-split btn-sm btn-block" href="{% url 'update_ticket' ticket.id %}">Update</a>
                         <a></a>
                         <button type="button" class="btn btn-primary btn-icon-split btn-sm btn-block" data-toggle="modal" data-target="#deleteTicketModal">Delete</a>
                     </div>

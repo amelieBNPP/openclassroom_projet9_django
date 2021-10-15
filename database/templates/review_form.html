@@ -6,7 +6,7 @@
             {% csrf_token %}
             <div class="mb-3">
                 <label>Title</br></label>
-                <input type="text" class="form-control" value="{{ form_review.headline }}">
+                <input type="text" class="form-control" value={{ form_review.headline }}>
             </div>
             <label>Rating</label></br>
             <div>
