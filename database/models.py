@@ -20,7 +20,7 @@ class Ticket(models.Model):
         null=True,
         blank=True,
     )
-    time_created = models.DateTimeField(auto_now_add=True)
+    time_created = models.DateTimeField(auto_now=True)
     reviewed = models.BooleanField(default=False)
 
     def __str__(self):
@@ -43,7 +43,7 @@ class Review(models.Model):
         to=settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
-    time_created = models.DateTimeField(auto_now_add=True)
+    time_created = models.DateTimeField(auto_now=True)
 
 
 class UserFollows(models.Model):
