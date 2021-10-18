@@ -16,7 +16,9 @@
                 <input type="file" style="display: none;" value={{ form_post_comment.instance.image }}>
                 <i class="fas fa-fw fa-folder"></i>Upload book image
                 </label>
-                <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                {% if not ticket_review %}
+                    <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                {% endif %}
             </form>
         </div>
     </div>

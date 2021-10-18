@@ -31,8 +31,12 @@ def registerPage(request):
 
 def loginPage(request):
     form = CreateUserForm()
+    print("loginPage")
     if request.method == "POST":
+        print("valeur dans loginPage")
+        print(request.POST)
         form = CreateUserForm(request.POST)
+        print(form)
         username = request.POST.get('username')
         password = request.POST.get('password1')
         user = authenticate(request, username=username, password=password)
@@ -107,7 +111,7 @@ def getComment(request):
         ]
         all_data = tickets_to_review + tickets_reviewed
         all_data.sort(key=attrgetter('time_created'), reverse=True)
-        return render(request, 'products/get.html', {'all_data': all_data, 'range_rate': range(5)})
+        return render(request, 'products/get.html', {'all_data': all_data})
 
 
 @ login_required(login_url='login')
@@ -121,8 +125,6 @@ def postComment(request):
         if form_post_comment.is_valid():
             form_post_comment.save()
             title = form_post_comment.cleaned_data.get('title')
-            messages.success(
-                request, f'information regarding your book, {title} has been saved')
             return redirect('get')
         else:
             form_post_comment = CreateTicketForm()
@@ -177,6 +179,7 @@ def review_page(request):
     return render(request, 'products/review.html', {'form': form})
 
 
+@ login_required(login_url='login')
 def updateTicket(request, pk):
     ticket = Ticket.objects.get(id=pk)
     form = CreateTicketForm(instance=ticket)
@@ -189,6 +192,7 @@ def updateTicket(request, pk):
     return render(request, 'update_ticket.html', {'form': form})
 
 
+@ login_required(login_url='login')
 def updateReview(request, pk):
     review = Review.objects.get(id=pk)
     ticket = Ticket.objects.get(id=review.ticket.id)
@@ -200,3 +204,32 @@ def updateReview(request, pk):
             form.save()
             return redirect('get')
     return render(request, 'update_review.html', {'form': form, 'ticket': ticket, 'rating_range': range(6)})
+
+
+@ login_required(login_url='login')
+def ticketReview(request):
+    form_ticket = CreateTicketForm()
+    form_review = CreateReviewForm()
+    if request.method == 'POST':
+        form_ticket = CreateTicketForm({
+            'title': request.POST['title'],
+            'description': request.POST['description'],
+        })
+
+        if request.FILES:
+            form_ticket.instance.image = request.FILES['image']
+        form_ticket.instance.user = request.user
+
+        form_review = CreateReviewForm({
+            'headline': request.POST['headline'],
+            'rating': request.POST['rating'],
+            'body': request.POST['body'],
+        })
+        form_review.instance.user = request.user
+        if all([form_ticket.is_valid(), form_review.is_valid()]):
+            form_ticket.instance.reviewed = True
+            form_ticket.save()
+            form_review.instance.ticket = Ticket.objects.last()
+            form_review.save()
+        return redirect('get')
+    return render(request, 'products/ticket_review.html', {'form_ticket': form_ticket, 'form_review': form_review, 'rating_range': range(6)})

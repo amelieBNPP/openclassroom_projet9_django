@@ -1,0 +1,53 @@
+{% extends "../framework.html" %} {% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+  <!-- Page Heading -->
+  <div class="text-center">
+    <h1 class="h3 mb-1 text-gray-800">Post comment and review on LITReview website</h1>
+    <p class="mb-4"></br>Feed ticket form :</p>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 mx-auto">
+        <form action="" method="post" id="post-form" enctype='multipart/form-data'>
+          {% csrf_token %}
+          <div class="mb-3 text-center">
+              <label>Book title</br></label>
+              <input type="text" class="form-control" value={{ form_ticket.title }}>
+          </div>
+          <div class="mb-0 text-center">
+              <label>Book description</br></label>
+              <textarea type="textarea" class="form-control" value={{ form_ticket.description }}></textarea>
+          </div>
+          <label class="btn btn-primary btn-block" >
+              <input type="file" style="display: none;" value={{ form_ticket.image }}>
+              <i class="fas fa-fw fa-folder"></i>Upload book image
+          </label>
+          <hr>
+          <p class="mb-4 text-center"></br>Feed review form :</p>
+          <div class="mb-3 text-center">
+              <label>Review title</br></label>
+              <input type="text" class="form-control" value={{ form_review.headline }}>
+          </div>
+          <div class="mb-0 text-center">
+            <label>Rating</label></br>
+            <select class="btn btn-primary dropdown-toggle" value="{{ form_review.rating }}">
+                {% for rating in rating_range %}
+                    <option value="{{ rating }}">{{ rating }}</option>
+                {% endfor %}
+            </select>
+          </div>
+          <div class="mb-0 text-center">
+              <label>Review description</br></label>
+              <textarea type="textarea" class="form-control" value="{{ form_review.body }}"></textarea>
+          </div></br>
+          <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+{% endblock %}

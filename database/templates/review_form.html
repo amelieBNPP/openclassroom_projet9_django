@@ -1,28 +1,32 @@
 {% block review_form %}
 <div class="col-sm-6 mx-auto">
-    <hr>
-    <div class="form">
-        <form action="" method="post" id="post-form">
-            {% csrf_token %}
-            <div class="mb-3">
-                <label>Title</br></label>
-                <input type="text" class="form-control" value={{ form_review.headline }}>
-            </div>
-            <label>Rating</label></br>
-            <div>
+    <div class="card-body">
+        <div id="content-wrapper" class="justify-content-center">
+            <hr>
+            <form action="" method="post" id="post-form">
                 {% csrf_token %}
-                <select class="btn btn-primary dropdown-toggle" value="{{ form_review.rating }}">
-                    {% for rating in rating_range %}
-                        <option value="{{ rating }}">{{ rating }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="mb-0">
-                <label>Book description</br></label>
-                <textarea type="textarea" class="form-control" value="{{ form_review.body }}"></textarea>
-            </div></br>
-            <button type="submit" class="btn btn-primary btn-block" name="sub-send-review-button" value={{ ticket.id }}>Submit</button>
-        </form>
+                <div class="mb-3">
+                    <label>Review title</br></label>
+                    <input type="text" class="form-control" value={{ form_review.headline }}>
+                </div>
+                <label>Rating</label></br>
+                <div>
+                    {% csrf_token %}
+                    <select class="btn btn-primary dropdown-toggle" value="{{ form_review.rating }}">
+                        {% for rating in rating_range %}
+                            <option value="{{ rating }}">{{ rating }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-0">
+                    <label>Review description</br></label>
+                    <textarea type="textarea" class="form-control" value="{{ form_review.body }}"></textarea>
+                </div></br>
+                {% if not ticket_review %}
+                    <button type="submit" class="btn btn-primary btn-block" name="sub-send-review-button" value={{ ticket.id }}>Submit</button>
+                {% endif %}
+            </form>
+        </div>
     </div>
 </div>
 {% endblock %}
