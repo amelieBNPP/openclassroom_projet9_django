@@ -15,11 +15,11 @@
           {% csrf_token %}
           <div class="mb-3 text-center">
               <label>Book title</br></label>
-              <input type="text" class="form-control" value={{ form_ticket.title }}>
+              <input type="text" class="form-control" name="title">
           </div>
           <div class="mb-0 text-center">
               <label>Book description</br></label>
-              <textarea type="textarea" class="form-control" value={{ form_ticket.description }}></textarea>
+              <textarea type="textarea" class="form-control" name="description"></textarea>
           </div>
           <label class="btn btn-primary btn-block" >
               <input type="file" style="display: none;" value={{ form_ticket.image }}>
@@ -29,7 +29,7 @@
           <p class="mb-4 text-center"></br>Feed review form :</p>
           <div class="mb-3 text-center">
               <label>Review title</br></label>
-              <input type="text" class="form-control" value={{ form_review.headline }}>
+              <input type="text" class="form-control" name="headline">
           </div>
           <div class="mb-0 text-center">
             <label>Rating</label></br>
@@ -41,7 +41,7 @@
           </div>
           <div class="mb-0 text-center">
               <label>Review description</br></label>
-              <textarea type="textarea" class="form-control" value="{{ form_review.body }}"></textarea>
+              <textarea type="textarea" class="form-control" name="body"></textarea>
           </div></br>
           <button type="submit" class="btn btn-primary btn-block">Submit</button>
         </form>

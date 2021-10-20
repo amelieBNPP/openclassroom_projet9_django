@@ -27,7 +27,7 @@
                                         {% csrf_token %}
                                         <div class="mb-3">
                                             <label>Title</br></label>
-                                            <input type="text" class="form-control" value={{form.headline}}>
+                                            <input type="text" class="form-control" name="headline" value={{form.instance.headline}}>
                                         </div>
                                         <label>Rating</label></br>
                                         <div>
@@ -39,7 +39,7 @@
                                         </div>
                                         <div class="mb-0">
                                             <label>Update book description</br></label>
-                                            <textarea type="textarea" class="form-control" value={{ form.body }}>{{ form.instance.body }}</textarea>
+                                            <textarea type="textarea" class="form-control" name="body">{{ form.instance.body }}</textarea>
                                         </div></br>
                                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
                                             <button type="submit" class="btn btn-primary btn-icon-split btn-sm btn-block">Update</button>
