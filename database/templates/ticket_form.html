@@ -1,19 +1,19 @@
 {% block ticket_form %}
-<div class="col-sm-6 mx-auto">   
+<div class="col-sm-8 mx-auto">   
     <div class="card-body">
         <div id="content-wrapper" class="justify-content-center">                         
             <form action="{% url 'tickets' %}" method="post" id="post-form" enctype='multipart/form-data'>
                 {% csrf_token %}
                 <div class="mb-3">
                 <label>Book title</br></label>
-                <input type="text" class="form-control" value={{ form_post_comment.instance.title }}>
+                <input type="text" class="form-control" name="title" value={{ form_post_comment.instance.title }}>
                 </div>
                 <div class="mb-0">
                     <label>Book description</br></label>
                     <textarea type="textarea" class="form-control" name="description"></textarea>
                 </div>
                 <label class="btn btn-primary btn-block" >
-                <input type="file" style="display: none;" value={{ form_post_comment.instance.image }}>
+                <input type="file" style="display: none;" name="image" value={{ form_post_comment.instance.image }}>
                 <i class="fas fa-fw fa-folder"></i>Upload book image
                 </label>
                 {% if not ticket_review %}

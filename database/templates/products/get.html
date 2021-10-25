@@ -10,7 +10,7 @@
   </div>
   <div class="container">
     <div class="row">
-      <div class="col-sm-6 mx-auto">
+      <div class="col-sm-8 mx-auto">
         <form id="form-ask-review" method="POST" action="{% url 'get' %}">
           {% csrf_token %}
           {% for ticket in all_data %}
@@ -24,7 +24,7 @@
             <div class="review-container">
               {% csrf_token %}
               <div class="tickets-container">
-                {% include 'review_template.html' with review=ticket ticket=ticket.ticket is_review=True is_card=True hide_edit=True %}
+                {% include 'review_template.html' with review=ticket ticket=ticket.ticket range_rate=rating_range is_review=True is_card=True hide_edit=True %}
                 {% block review_content %}
                 {% endblock %}
               </div>

@@ -1,8 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from django.db import models
-from django.forms import forms, CharField, ImageField, ModelForm
-from .models import Ticket, UserFollows, Review
+from django.forms import ModelForm
+from .models import Ticket, Review
 
 
 class CreateUserForm(UserCreationForm):
@@ -21,12 +20,3 @@ class CreateReviewForm(ModelForm):
     class Meta:
         model = Review
         fields = ['headline', 'rating', 'body']
-        # widgets = {'rating': ModelForm.NumberInput(attrs={'class': 'Stars'})}
-        labels = [
-            "Very strongly not recommended",
-            "strongly not recommended",
-            "not recommended",
-            "recommended",
-            "Very recommended",
-            "Very strongly recommended",
-        ]

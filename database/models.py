@@ -1,10 +1,6 @@
-from django.core.validators import MaxLengthValidator, MinValueValidator, MaxValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.conf import settings
 from django.db import models
-from django.db.models import fields
-from django.db.models.fields import TextField
-from django.contrib.auth.models import AbstractUser
-from django.forms import widgets
 
 
 class Ticket(models.Model):
@@ -63,6 +59,3 @@ class UserFollows(models.Model):
         # ensures we don't get multiple UserFollows instances
         # for unique user-user_followed pairs
         unique_together = ('user', 'followed_user',)
-
-    # def __str__(self):
-    #     return f'{self.user} follows {self.followed_user}'

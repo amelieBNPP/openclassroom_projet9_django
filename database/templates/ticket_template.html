@@ -6,19 +6,15 @@
     <!-- Main Content -->
     <div id="content">
         <!-- Basic Card Example -->
-        <div class="card shadow mb-3">
+        <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">Ticket - {{ ticket }}</h6>
+                <div class="text-xs">posted by {% if request.user == ticket.user %}You{% else %}{{ ticket.user }}{% endif %}, on {{ ticket.time_created }}</div>
             </div>
             <div class="card-body">
                 <div class="text-center">
-                    <p class="text-xs">
-                        Post by : {{ ticket.user }} </br>
-                        Created on : {{ ticket.time_created }} 
-                    </p>
-                    <hr>
-                    <p class="mb-1">{{ ticket.description }} </p>
-                    <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+                    <p class="mb-1">{{ ticket.description }}</p>
+                    <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 15rem;"
                                     src="../../media/{{ticket.image}}" alt="{{ ticket.title }}">
                     {% if not is_review and is_card%}
                         </br><button type="submit" class="btn btn-primary btn-block" name="sub-ask-review-button" value={{ ticket.id }}>Add review</button>
@@ -35,7 +31,7 @@
                     {% endif %}
                 </div>
             </div>
-        </div>
+         </div>
     </div>
 </div>  
 

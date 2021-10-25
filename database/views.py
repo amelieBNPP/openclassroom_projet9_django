@@ -31,12 +31,8 @@ def registerPage(request):
 
 def loginPage(request):
     form = CreateUserForm()
-    print("loginPage")
     if request.method == "POST":
-        print("valeur dans loginPage")
-        print(request.POST)
         form = CreateUserForm(request.POST)
-        print(form)
         username = request.POST.get('username')
         password = request.POST.get('password1')
         user = authenticate(request, username=username, password=password)
@@ -69,7 +65,6 @@ def getComment(request):
                     'form_review': form_review,
                     'rating_range': range(6),
                 },
-
             )
         if request.POST.get('delete-ticket-button'):
             Ticket.objects.get(
@@ -78,10 +73,16 @@ def getComment(request):
             ).delete()
 
         if request.POST.get('delete-review-button'):
+            review = Review.objects.get(
+                id=request.POST['delete-review-button']
+            )
             Review.objects.get(
                 user=request.user,
                 id=request.POST['delete-review-button']
             ).delete()
+            Ticket.objects.filter(
+                id=review.ticket.id
+            ).update(reviewed=False)
 
         if request.POST.get('sub-send-review-button'):
             form_review = CreateReviewForm(request.POST)
@@ -111,7 +112,7 @@ def getComment(request):
         ]
         all_data = tickets_to_review + tickets_reviewed
         all_data.sort(key=attrgetter('time_created'), reverse=True)
-        return render(request, 'products/get.html', {'all_data': all_data})
+        return render(request, 'products/get.html', {'all_data': all_data, 'rating_range': range(5)})
 
 
 @ login_required(login_url='login')
@@ -124,7 +125,6 @@ def postComment(request):
             form_post_comment.instance.image = request.FILES['image']
         if form_post_comment.is_valid():
             form_post_comment.save()
-            title = form_post_comment.cleaned_data.get('title')
             return redirect('get')
         else:
             form_post_comment = CreateTicketForm()
@@ -165,18 +165,6 @@ def follows_list(request):
                 ),
             ).delete()
         return redirect('follower')
-
-
-@ login_required(login_url='login')
-def review_page(request):
-    form = CreateReviewForm()
-    if request.method == "POST":
-        form = CreateTicketForm(request.POST)
-        form.instance.user = request.user
-        if form.is_valid():
-            form.save()
-            return redirect('products/get.html')
-    return render(request, 'products/review.html', {'form': form})
 
 
 @ login_required(login_url='login')

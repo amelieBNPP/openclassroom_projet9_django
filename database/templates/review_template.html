@@ -6,18 +6,14 @@
         <!-- Main Content -->
         <div id="content">
             <!-- Basic Card Example -->
-            <div class="card shadow mb-3">
+            <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Review - {{ ticket }}</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">{% if request.user == review.user %} You {% else %} {{ review.user }}{% endif %} posted a review</h6>
+                    <div class="text-xs">{{ review.time_created }}</div>
                 </div>
                 <div class="card-body">
                     <div class="text-center">
                         {% if is_review and is_card %}
-                            <p class="text-xs">
-                                Post by : {{ review.user }} </br>
-                                Created on : {{ review.time_created }}
-                            </p>
-                            <hr>
                             <h6 class="m-0 font-weight-bold text-primary">{{ review.headline }} - {% for i in range_rate %}{% if i < review.rating %}★{% else %}☆{% endif %}{% endfor %}</h6></br>
                             <p class="mb-1">{{ review.body }}</p>
                             </br>
@@ -32,7 +28,7 @@
                             {% block review_form %}
                             {% endblock %}
                         {% endif %}
-                        {% if request.user == review.user and is_card %}
+                        {% if request.user == review.user and is_card%}
                             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                                 <a class="btn btn-primary btn-icon-split btn-sm btn-block" href="{% url 'update_review' review.id %}">Update</a>
                                 <a></a>

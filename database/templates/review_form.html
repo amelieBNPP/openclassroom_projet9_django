@@ -1,5 +1,4 @@
 {% block review_form %}
-<div class="col-sm-6 mx-auto">
     <div class="card-body">
         <div id="content-wrapper" class="justify-content-center">
             <hr>
@@ -7,26 +6,26 @@
                 {% csrf_token %}
                 <div class="mb-3">
                     <label>Review title</br></label>
-                    <input type="text" class="form-control" value={{ form_review.headline }}>
+                    <input type="text" class="form-control" name="headline">
                 </div>
                 <label>Rating</label></br>
                 <div>
                     {% csrf_token %}
-                    <select class="btn btn-primary dropdown-toggle" value="{{ form_review.rating }}">
+                    <div class="rating-stars">
                         {% for rating in rating_range %}
-                            <option value="{{ rating }}">{{ rating }}</option>
+                            <input type="radio" name="rating" value="{{ rating }}" id="{{ rating }}">
+                            <label for="{{ rating }}">{{ rating }} {% if rating < 5 %}-{% else %}{% endif %}</label>
                         {% endfor %}
-                    </select>
+                    </div>
                 </div>
                 <div class="mb-0">
                     <label>Review description</br></label>
-                    <textarea type="textarea" class="form-control" value="{{ form_review.body }}"></textarea>
+                    <textarea type="textarea" class="form-control" name="body"></textarea>
                 </div></br>
-                {% if not ticket_review %}
+                {% if is_review %}
                     <button type="submit" class="btn btn-primary btn-block" name="sub-send-review-button" value={{ ticket.id }}>Submit</button>
                 {% endif %}
             </form>
         </div>
     </div>
-</div>
 {% endblock %}

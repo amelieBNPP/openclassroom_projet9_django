@@ -8,7 +8,7 @@
     </div>
     <div class="container">
         <div class="row">
-            <div class="col-sm-6 mx-auto"> 
+            <div class="col-sm-8 mx-auto">
                 <div class="card-body">
                     <div id="content-wrapper" class="justify-content-center"> 
                                 
@@ -17,18 +17,20 @@
                             
                             <div class="mb-3">
                                 <label>Book title</br></label>
-                                <input type="text" class="form-control" name="title"/>
+                                <input type="text" class="form-control" name="title" value="{{form.instance.title}}">
                             </div>
                             <div class="mb-0">
                                 <label>Update ticket</br></label>
-                                <textarea type="textarea" class="form-control" name="description"></textarea>
+                                <textarea type="textarea" class="form-control" name="description">{{form.instance.description}}</textarea>
                             </div>
-
+                            <div class="text-center">
+                                <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 10rem;"
+                                        src="../../media/{{form.instance.image}}">
+                            </div>
                             <label class="btn btn-primary btn-block" >
-                            <input type="file" style="display: none;" value={{ form.image }}>
+                            <input type="file" style="display: none;" name="image" value="{{form.instance.image}}">
                             <i class="fas fa-fw fa-folder"></i>Upload book image
                             </label>
-
 
                             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                                 <button type="submit" class="btn btn-primary btn-icon-split btn-sm btn-block">Update</button>

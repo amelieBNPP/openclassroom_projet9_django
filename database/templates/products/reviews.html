@@ -9,9 +9,11 @@
   </div>
   <div class="container">
     <div class="row">
-      {% include 'review_template.html' with ticket=ticket_review is_review=True is_card=False hide_edit=True %}
-      {% block review_content %}
-      {% endblock %}
+      <div class="col-sm-8 mx-auto">
+        {% include 'review_template.html' with ticket=ticket_review is_review=True is_card=False hide_edit=True %}
+        {% block review_content %}
+        {% endblock %}
+      </div>
     </div>
   </div>
 </div>

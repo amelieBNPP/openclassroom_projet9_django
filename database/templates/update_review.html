@@ -8,45 +8,48 @@
     </div>
     <div class="container">
         <div class="row">
-            <div id="content" class="col justify-content-center">
-             <!-- Main Content -->
-                <div id="content">
-                <!-- Basic Card Example -->
-                    <div class="card shadow mb-3">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Review - {{ ticket }}</h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="text-center">
-                                {% include 'ticket_template.html' with ticket=ticket is_review=True is_card=True hide_edit=True %}
-                                {% block ticket_content %}
-                                {% endblock %}
-                                <hr>
-                                <div class="form">
-                                    <form action="" method="post" id="post-form">
-                                        {% csrf_token %}
-                                        <div class="mb-3">
-                                            <label>Title</br></label>
-                                            <input type="text" class="form-control" name="headline" value={{form.instance.headline}}>
-                                        </div>
-                                        <label>Rating</label></br>
-                                        <div>
-                                            <select class="btn btn-primary dropdown-toggle" value={{ form.rating }}>
-                                                {% for rating in rating_range %}
-                                                    <option value="{{ rating }}"{% if form.instance.rating == rating %} selected{% endif %}>{{ rating }}</option>
-                                                {% endfor %}
-                                            </select>
-                                        </div>
-                                        <div class="mb-0">
-                                            <label>Update book description</br></label>
-                                            <textarea type="textarea" class="form-control" name="body">{{ form.instance.body }}</textarea>
-                                        </div></br>
-                                        <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                                            <button type="submit" class="btn btn-primary btn-icon-split btn-sm btn-block">Update</button>
-                                            <a></a>
-                                            <a class="btn btn-primary btn-icon-split btn-sm btn-block" href="{% url 'get' %}">Cancel</a>
-                                        </div>
-                                    </form>
+            <div class="col-sm-8 mx-auto">
+                <div id="content" class="col justify-content-center">
+                <!-- Main Content -->
+                    <div id="content">
+                    <!-- Basic Card Example -->
+                        <div class="card shadow mb-3">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Review - {{ ticket }}</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="text-center">
+                                    {% include 'ticket_template.html' with ticket=ticket is_review=True is_card=True hide_edit=True %}
+                                    {% block ticket_content %}
+                                    {% endblock %}
+                                    <hr>
+                                    <div class="form">
+                                        <form action="" method="post" id="post-form">
+                                            {% csrf_token %}
+                                            <div class="mb-3">
+                                                <label>Title</br></label>
+                                                <input type="text" class="form-control" name="headline" value={{form.instance.headline}}>
+                                            </div>
+                                            <label>Rating</label></br>
+                                            <div>
+                                                <div class="rating-stars">
+                                                    {% for rating in rating_range %}
+                                                        <input type="radio" name="rating" value="{{ rating }}" id="{{ rating }}" {% if form.instance.rating == rating %} checked{% endif %}>
+                                                        <label for="{{ rating }}">{{ rating }} {% if rating < 5 %}-{% else %}{% endif %}</label>
+                                                    {% endfor %}
+                                                </div>
+                                           </div>
+                                            <div class="mb-0">
+                                                <label>Update book description</br></label>
+                                                <textarea type="textarea" class="form-control" name="body">{{ form.instance.body }}</textarea>
+                                            </div></br>
+                                            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                                                <button type="submit" class="btn btn-primary btn-icon-split btn-sm btn-block">Update</button>
+                                                <a></a>
+                                                <a class="btn btn-primary btn-icon-split btn-sm btn-block" href="{% url 'get' %}">Cancel</a>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -44,6 +44,9 @@
                                         <input type="text" class="form-control form-control-user" id="exampleUserName"
                                             placeholder="User Name" name="username">
                                     </div>
+                                    <div class="col-sm-6 text-xs">
+                                        {{form.username.help_text}}
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <input type="email" class="form-control form-control-user" id="exampleInputEmail"
@@ -58,6 +61,16 @@
                                         <input type="password" class="form-control form-control-user"
                                             id="exampleRepeatPassword" placeholder="Repeat Password" name="password2">
                                     </div>
+                                    <div class="text-xs">
+                                        {{form.password1.help_text}}
+                                    </div>
+                                    {% if messages %}
+                                    <ul class="messages">
+                                        {% for message in messages %}
+                                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                    {% endif %}
                                 </div>
                                 <input class="btn btn-primary btn-user btn-block" type="submit" name="Register Account"/>
                             </form>
