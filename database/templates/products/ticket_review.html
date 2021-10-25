@@ -19,7 +19,7 @@
           </div>
           <div class="mb-0 text-center">
               <label>Book description</br></label>
-              <textarea type="textarea" class="form-control" name="description"></textarea>
+              <textarea type="textarea" class="form-control" name="description"></textarea></br>
           </div>
           <label class="btn btn-primary btn-block" >
               <input type="file" style="display: none;" value={{ form_ticket.image }}>
@@ -33,17 +33,18 @@
           </div>
           <div class="mb-0 text-center">
             <label>Rating</label></br>
-            <select class="btn btn-primary dropdown-toggle" value="{{ form_review.rating }}">
-                {% for rating in rating_range %}
-                    <option value="{{ rating }}">{{ rating }}</option>
-                {% endfor %}
-            </select>
+              <div class="rating-stars">
+                  {% for rating in rating_range %}
+                      <input type="radio" name="rating" value="{{ rating }}" id="{{ rating }}">
+                      <label for="{{ rating }}">{{ rating }} {% if rating < 5 %}-{% else %}{% endif %}</label>
+                  {% endfor %}
+              </div>
           </div>
           <div class="mb-0 text-center">
               <label>Review description</br></label>
               <textarea type="textarea" class="form-control" name="body"></textarea>
           </div></br>
-          <button type="submit" class="btn btn-primary btn-block">Submit</button>
+          <button type="submit" class="btn btn-primary btn-block">Submit</button></br>
         </form>
       </div>
     </div>

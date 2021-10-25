@@ -56,7 +56,7 @@ An easyest way to manage database is to run the server and go throught [DjangoAd
 | makemigrations | create new migration with updates |
 | migrate | execute the migration |
 
-## LiteReview website
+## LITReview website
 ### Stack developement
 
 This project is developped in python with Django framework.
@@ -65,7 +65,7 @@ Django is an open source framework write in python that allow to create complexe
 - The website is responsive and can be used for computer or smartphone screen
 
 ### About website
-The aim of this project is to develop a website **LITEREVIEW** that allow to ask review about a book.
+The aim of this project is to develop a website **LITReview** that allow to ask review about a book.
 1. User can register/login
 2. User can create a ticket to request a review
 3. User can add review about a book
