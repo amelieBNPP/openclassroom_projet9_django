@@ -6,19 +6,19 @@ _Owner: [Amélie](https://github.com/ameliebnpp)_
 
 ### Installation
 
-1. Create the virtual environement and activate it:
-```bash
-python -m venv .venv
-source .venv/bin/activate
-```
-*The virtual environement is created only one time, however, it is activate each time we start to develop.*
-
-2. Clone the project:
+1. Clone the project:
 
 ```bash
 git clone --recursive git@github.com:/amelieBNPP/openclassroom_projet9_django && cd openclassroom_projet9_django
 ```
 *Clone only one time the project.*
+
+2. Create the virtual environement and activate it:
+```bash
+python -m venv .venv
+source .venv/bin/activate
+```
+*The virtual environement is created only one time, however, it is activate each time we start to develop.*
 
 ### Dependencies
 
@@ -47,21 +47,33 @@ To create new user, run the following command:
 ```bash
 CREATE USER name WITH ENCRYPTED PASSWORD 'password';
 ```
-An easyest way to manage database is to go throught [PgAdmin4](https://www.pgadmin.org/download/)
+An easyest way to manage database is to run the server and go throught [DjangoAdministration](
+    http://127.0.0.1:8000/admin/)
 
 | key commands | descriptions | 
 |:----------:|:-------------:|
-| ctr D| quit SQL |
-| \l| display table |
-| \d tablename | table description |
+| showmigrations | show the list of migrations and their states |
+| makemigrations | create new migration with updates |
+| migrate | execute the migration |
 
-### Django
+## LiteReview website
+### Stack developement
 
+This project is developped in python with Django framework.
 Django is an open source framework write in python that allow to create complexes website easily.
+- Design have been developped through the free template [sb admin 2](https://startbootstrap.com/theme/sb-admin-2)
+- The website is responsive and can be used for computer or smartphone screen
 
-1. shell access & database communication
-```
-python manage.py shell
-from database.models import Ticket
+### About website
+The aim of this project is to develop a website **LITEREVIEW** that allow to ask review about a book.
+1. User can register/login
+2. User can create a ticket to request a review
+3. User can add review about a book
+4. user can follow others users
 
-```
+### Preview
+
+![Login](/login.png)
+![Ticket](/ticket.png)
+![Review](/review.png)
+![Followers](/followers.png)
