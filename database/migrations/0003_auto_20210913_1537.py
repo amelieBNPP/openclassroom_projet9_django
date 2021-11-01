@@ -13,7 +13,11 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='ticket',
             name='image',
-            field=models.ImageField(blank=True, null=True, upload_to='database/statics/images/'),
+            field=models.ImageField(
+                blank=True,
+                null=True,
+                upload_to='database/statics/images/',
+            ),
         ),
         migrations.AlterField(
             model_name='ticket',

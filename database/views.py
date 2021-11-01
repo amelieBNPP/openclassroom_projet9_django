@@ -112,7 +112,11 @@ def getComment(request):
         ]
         all_data = tickets_to_review + tickets_reviewed
         all_data.sort(key=attrgetter('time_created'), reverse=True)
-        return render(request, 'products/get.html', {'all_data': all_data, 'rating_range': range(5)})
+        return render(
+            request,
+            'products/get.html',
+            {'all_data': all_data, 'rating_range': range(5)},
+        )
 
 
 @ login_required(login_url='login')
@@ -128,7 +132,11 @@ def postComment(request):
             return redirect('get')
         else:
             form_post_comment = CreateTicketForm()
-    return render(request, 'products/tickets.html', {'form_post_comment': form_post_comment})
+    return render(
+        request,
+        'products/tickets.html',
+        {'form_post_comment': form_post_comment},
+    )
 
 
 @ login_required(login_url='login')
@@ -191,7 +199,11 @@ def updateReview(request, pk):
         if form.is_valid():
             form.save()
             return redirect('get')
-    return render(request, 'update_review.html', {'form': form, 'ticket': ticket, 'rating_range': range(6)})
+    return render(
+        request,
+        'update_review.html',
+        {'form': form, 'ticket': ticket, 'rating_range': range(6)},
+    )
 
 
 @ login_required(login_url='login')
@@ -220,4 +232,9 @@ def ticketReview(request):
             form_review.instance.ticket = Ticket.objects.last()
             form_review.save()
         return redirect('get')
-    return render(request, 'products/ticket_review.html', {'form_ticket': form_ticket, 'form_review': form_review, 'rating_range': range(6)})
+    return render(
+        request,
+        'products/ticket_review.html',
+        {'form_ticket': form_ticket, 'form_review': form_review,
+            'rating_range': range(6)},
+    )
